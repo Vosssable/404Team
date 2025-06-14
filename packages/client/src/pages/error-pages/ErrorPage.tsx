@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import styles from './ErrorPage.module.css'
+import './ErrorPage.css'
 
 const ErrorPage = () => {
   const handleReload = useCallback(() => {
@@ -7,13 +7,13 @@ const ErrorPage = () => {
   }, [])
 
   return (
-    <div className={`${styles.errorPage} ${styles.error500}`}>
-      <header className={styles.header}>
-        <button className={styles.link} onClick={handleReload}>
+    <div className="errorPage error500">
+      <header className="header">
+        <button className="link" onClick={handleReload}>
           Перезагрузить страницу
         </button>
       </header>
-      <div className={styles.spacer} />
+      <div className="spacer" />
     </div>
   )
 }
