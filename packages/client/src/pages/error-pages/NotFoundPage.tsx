@@ -1,10 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom'
+import cn from 'classnames'
 import './ErrorPage.css'
 
 const NotFoundPage = () => {
   const navigate = useNavigate()
   return (
-    <div className="errorPage error404">
+    <div className={cn('errorPage', 'error404')}>
       <header className="header">
         <Link to="/" className="link">
           На главную
