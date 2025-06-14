@@ -1,0 +1,24 @@
+#game_wolf_layout {
+  background-image: url('/GameLayout.png');
+  width: 100%;
+  height: 100%;
+}
+
+.wolf-center,
+.wolf-left,
+.wolf-right {
+  position: absolute;
+}
+
+.wolf-left {
+  transform: scaleX(-1);
+}
+
+#game_wolf_layout,
+.wolf-center,
+.wolf-left,
+.wolf-right {
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
