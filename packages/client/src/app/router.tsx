@@ -4,7 +4,7 @@ import LoginPage from '../pages/LoginPage'
 import RegisterPage from '../pages/RegisterPage'
 import ProfilePage from '../pages/ProfilePage'
 import ForumPage from '../pages/ForumPage'
-import ErrorPage from '../pages/ErrorPage'
+import NotFoundPage from '../pages/error-pages/NotFoundPage'
 import PrivateRoute from './PrivateRoute'
 import AuthLayout from './AuthLayout'
 import { GamePage } from '../pages/GamePage'
@@ -45,6 +45,6 @@ export const router = createBrowserRouter([
   },
   {
     path: '*',
-    element: <ErrorPage />,
+    element: <NotFoundPage />,
   },
 ])

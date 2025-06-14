@@ -1,0 +1,55 @@
+.errorPage {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+}
+
+.error404 {
+  background: url('/images/error-pages/404-error.jpg') center/cover no-repeat;
+}
+
+.error500 {
+  background: url('/images/error-pages/500-error.jpg') center/cover no-repeat;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 18px 0 14px 0;
+  background: rgba(0, 0, 0, 0.28);
+  z-index: 110;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2px);
+}
+
+.spacer {
+  height: 60px;
+}
+
+.link {
+  color: #fff;
+  background: #e07a1b;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 28px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s;
+  outline: none;
+}
+
+.link:hover,
+.link:focus {
+  background: #ffb13b;
+  color: #222;
+}
