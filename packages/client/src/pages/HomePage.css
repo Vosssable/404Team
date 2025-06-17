@@ -1,17 +1,29 @@
 .homepage-background {
-  background-image: url('img/background.jpg');
+  background-image: url('/img/background.jpg');
   background-size: cover;
   background-position: center;
-  height: 100vh;
-  padding: 2rem;
+  background-repeat: no-repeat;
+  padding: 40px 20px;
 }
 
-.startgame-btn {
+.custom-card {
   background-color: #ff8800;
-  color: white;
+  color: #ffffff;
+  border: none;
+  border-radius: 16px;
+}
+
+.custom-card .btn {
+  background-color: #ffffff;
+  color: #6f370e;
   border: none;
 }
 
-.startgame-btn:hover {
-  background-color: #e07000;
+.custom-card .btn:hover {
+  background-color: #e0e0e0;
+  color: #6f370e;
+}
+
+.card-container {
+  max-width: 500px;
 }
