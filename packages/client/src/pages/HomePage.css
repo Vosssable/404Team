@@ -1,0 +1,17 @@
+.homepage-background {
+  background-image: url('img/background.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  padding: 2rem;
+}
+
+.startgame-btn {
+  background-color: #ff8800;
+  color: white;
+  border: none;
+}
+
+.startgame-btn:hover {
+  background-color: #e07000;
+}
