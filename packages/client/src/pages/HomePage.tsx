@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './HomePage.css'
 
-export default function HomePage() {
+const HomePage = () => {
   return (
     <div className="homepage-background d-flex flex-column justify-content-center align-items-center text-center">
       <img
@@ -26,3 +26,5 @@ export default function HomePage() {
     </div>
   )
 }
+
+export default HomePage
