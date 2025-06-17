@@ -63,19 +63,13 @@ const HomePage = () => {
               </div>
             </div>
           </div>
+        </div>
 
+        <div className="row justify-content-center mt-5">
           <div className="col-md-3">
-            <div className="card custom-card text-center shadow">
-              <div className="card-body">
-                <h5 className="card-title">Профиль</h5>
-                <p className="card-text">
-                  Настраивай аккаунт и отслеживай свою статистику.
-                </p>
-                <Link to="/profile" className="btn btn-light">
-                  Открыть профиль
-                </Link>
-              </div>
-            </div>
+            <Link to="/profile" className="btn btn-outline-light btn-lg">
+              Мой профиль
+            </Link>
           </div>
         </div>
       </div>
