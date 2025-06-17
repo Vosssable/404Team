@@ -5,6 +5,7 @@ import './HomePage.css'
 const HomePage = () => {
   return (
     <div className="homepage-background d-flex flex-column justify-content-center align-items-center text-center">
+      <h2 className="visually-hidden">Главная страница</h2>
       <img
         src="/img/logo.png"
         alt="Волк ловит яйца"
