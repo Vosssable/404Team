@@ -1,4 +1,4 @@
 .bg__auth {
-  background-image: url(../../public/image-1.jpg);
+  background-image: url('/auth-bg.jpg');
   background-size: cover;
 }
