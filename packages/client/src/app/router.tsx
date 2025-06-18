@@ -8,6 +8,7 @@ import ErrorPage from '../pages/ErrorPage'
 import PrivateRoute from './PrivateRoute'
 import AuthLayout from './AuthLayout'
 import { GamePage } from '../pages/GamePage'
+import Lider from '../pages/LiderBord'
 
 export const router = createBrowserRouter([
   {
@@ -46,5 +47,9 @@ export const router = createBrowserRouter([
   {
     path: '*',
     element: <ErrorPage />,
+  },
+  {
+    path: 'liders',
+    element: <Lider />,
   },
 ])
