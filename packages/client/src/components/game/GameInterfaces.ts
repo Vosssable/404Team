@@ -1,13 +1,3 @@
-export interface WolfSpritePropsInterface {
-  imageUrl: string
-  position: string
-  className: string
-  width?: number
-  height?: number
-  top?: number
-  left?: number
-}
-
 export interface KeyDownResponseInterface {
   position: string
   className: string
@@ -20,3 +10,19 @@ export type PositionInterface =
   | 'Left'
   | 'UpperRight'
   | 'UpperLeft'
+
+export interface LineInterface {
+  start: { x: number; y: number }
+  end: { x: number; y: number }
+  index: PositionInterface
+}
+
+export interface EggInterface {
+  line: number
+  progress: number
+  stage: number
+  rotation: number
+  x: number
+  y: number
+  lastUpdate: number
+}

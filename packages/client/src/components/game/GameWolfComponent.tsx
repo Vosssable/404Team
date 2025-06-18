@@ -1,6 +1,6 @@
 import { KeyDownResponseInterface, PositionInterface } from './GameInterfaces'
-import GameWolfSprite from './GameWolfSprite'
 import changeWolfPosition from '../../utils/helpers/changeWolfPosition'
+import React from 'react'
 
 interface WolfProps {
   positionValue: KeyDownResponseInterface
@@ -16,17 +16,17 @@ const GameWolfComponent = (props: WolfProps) => {
       props.layoutWidth,
       props.layoutHeight
     )
-  console.log(props.positionValue)
 
   return (
-    <GameWolfSprite
-      imageUrl={props.positionValue.imageUrl}
-      className={props.positionValue.className}
-      position={props.positionValue.position}
-      width={width}
-      height={height}
-      top={top}
-      left={left}
+    <div
+      className={`wolf-${props.positionValue.className}`}
+      style={{
+        backgroundImage: `url(${props.positionValue.imageUrl})`,
+        width: `${width}px`,
+        height: `${height}px`,
+        top: `${top}px`,
+        left: `${left}px`,
+      }}
     />
   )
 }

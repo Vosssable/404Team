@@ -4,7 +4,6 @@ const onGameKeyDown = (
   e: KeyboardEvent,
   previous: string
 ): KeyDownResponseInterface | undefined => {
-  console.log('onGameKeyDown', e.key.toLowerCase(), previous)
   switch (e.key.toLowerCase()) {
     case 'arrowup':
     case 'w':
@@ -70,27 +69,27 @@ function checkPosition(
 
 const positionState = {
   LEFT: {
-    imageUrl: '/Wolf.png',
+    imageUrl: '/game-wolf-moving.png',
     position: 'Left',
     className: 'left',
   },
   UPPERLEFT: {
-    imageUrl: '/Wolf.png',
+    imageUrl: '/game-wolf-moving.png',
     position: 'UpperLeft',
     className: 'left',
   },
   RIGHT: {
-    imageUrl: '/Wolf.png',
+    imageUrl: '/game-wolf-moving.png',
     position: 'Right',
     className: 'right',
   },
   UPPERRIGHT: {
-    imageUrl: '/Wolf.png',
+    imageUrl: '/game-wolf-moving.png',
     position: 'UpperRight',
     className: 'right',
   },
   CENTER: {
-    imageUrl: '/WolfDefault.png',
+    imageUrl: '/game-wolf-moving.png',
     position: 'Center',
     className: 'center',
   },

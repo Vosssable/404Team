@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import './GameStyles.css'
 import onGameKeyDown from '../../utils/helpers/onGameKeyDown'
 import GameWolfComponent from './GameWolfComponent'
 import { KeyDownResponseInterface } from './GameInterfaces'
+import GameTest from './GameTest'
+import './GameStyles.css'
 
 let previousPosition = 'Center'
 
@@ -10,7 +11,7 @@ const GameLayout = () => {
   const [positionValue, changePositionValue] = useState({
     position: 'Center',
     className: 'center',
-    imageUrl: '/Default.png',
+    imageUrl: '/game-wolf-center.png',
   } as KeyDownResponseInterface)
 
   const [absValues, setAbsValues] = useState({
@@ -29,7 +30,6 @@ const GameLayout = () => {
     const onKeyDown = (e: KeyboardEvent) => {
       e.preventDefault()
       const keyDown = onGameKeyDown(e, previousPosition)
-      console.log('keyDown', keyDown, previousPosition)
       if (!keyDown) return
 
       changePositionValue(keyDown)
@@ -41,7 +41,7 @@ const GameLayout = () => {
     return () => {
       window.removeEventListener('keydown', onKeyDown)
       window.removeEventListener('resize', handleResize)
-    } //на всякий удаляем при размонтировании волка
+    } //на всякий удаляем при размонтировании волчары
   }, [])
 
   return (
@@ -51,12 +51,7 @@ const GameLayout = () => {
         layoutHeight={absValues.height}
         layoutWidth={absValues.width}
       />
-      <canvas
-        id="game_canvas_layout"
-        style={{
-          width: `${absValues.width}px`,
-          height: `${absValues.height}px`,
-        }}></canvas>
+      <GameTest width={absValues.width} height={absValues.height} />
     </div>
   )
 }
