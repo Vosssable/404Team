@@ -1,7 +1,11 @@
+import './RegisterPage.css'
+import FormToFill from '../components/FormToFill'
+import { loginProps } from '../types/otherProps'
+
 const LoginPage = () => {
   return (
-    <div>
-      <h1>Страница входа</h1>
+    <div className="container-fluid bg__auth vw-100 vh-100 p-0 m-0 d-flex justify-content-center align-items-center">
+      <FormToFill {...loginProps} />
     </div>
   )
 }
