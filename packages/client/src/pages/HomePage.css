@@ -7,21 +7,10 @@
 }
 
 .custom-card {
-  background-color: #ff8800;
-  color: #ffffff;
+  background-image: url('/form-bg.png');
+  color: var(--color-text-formTofill);
   border: none;
   border-radius: 16px;
-}
-
-.custom-card .btn {
-  background-color: #ffffff;
-  color: #6f370e;
-  border: none;
-}
-
-.custom-card .btn:hover {
-  background-color: #e0e0e0;
-  color: #6f370e;
 }
 
 .card-container {
