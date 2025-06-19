@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './HomePage.css'
+import HomeCard from '../components/HomeCard'
+import Button from '../components/Button'
+import '../components/FormToFill.css'
 
 const HomePage = () => {
   return (
@@ -23,52 +26,37 @@ const HomePage = () => {
       <div className="container">
         <div className="row justify-content-center g-4">
           <div className="col-md-3">
-            <div className="card custom-card text-center shadow">
-              <div className="card-body">
-                <h5 className="card-title">Играть</h5>
-                <p className="card-text">
-                  Начать новую игру и установить рекорд!
-                </p>
-                <Link to="/game" className="btn btn-light">
-                  Начать игру
-                </Link>
-              </div>
-            </div>
+            <HomeCard
+              title="Играть"
+              text="Начать новую игру и установить рекорд!"
+              buttonText="Начать игру"
+              link="/game"
+            />
           </div>
 
           <div className="col-md-3">
-            <div className="card custom-card text-center shadow">
-              <div className="card-body">
-                <h5 className="card-title">Форум</h5>
-                <p className="card-text">
-                  Общайся с другими игроками и делись опытом.
-                </p>
-                <Link to="/forum" className="btn btn-light">
-                  Перейти
-                </Link>
-              </div>
-            </div>
+            <HomeCard
+              title="Форум"
+              text="Общайся с другими игроками и делись опытом."
+              buttonText="Перейти"
+              link="/forum"
+            />
           </div>
 
           <div className="col-md-3">
-            <div className="card custom-card text-center shadow">
-              <div className="card-body">
-                <h5 className="card-title">Таблица лидеров</h5>
-                <p className="card-text">
-                  Следи за результатами лучших игроков.
-                </p>
-                <Link to="/leaderboard" className="btn btn-light">
-                  Посмотреть
-                </Link>
-              </div>
-            </div>
+            <HomeCard
+              title="Таблица лидеров"
+              text="Следи за результатами лучших игроков."
+              buttonText="Посмотреть"
+              link="/leaderboard"
+            />
           </div>
         </div>
 
         <div className="row justify-content-center mt-5">
           <div className="col-md-3">
-            <Link to="/profile" className="btn btn-outline-light btn-lg">
-              Мой профиль
+            <Link to="/profile">
+              <Button className="btn btn-outline-light">Мой профиль</Button>
             </Link>
           </div>
         </div>
