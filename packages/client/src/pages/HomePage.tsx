@@ -30,7 +30,7 @@ const HomePage = () => {
               title="Играть"
               text="Начать новую игру и установить рекорд!"
               buttonText="Начать игру"
-              link="/game"
+              link="/startgame"
             />
           </div>
 

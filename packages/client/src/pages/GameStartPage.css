@@ -1,0 +1,46 @@
+.gamestart-background {
+  background-image: url('/img/background.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.gamestart-background::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 0;
+}
+
+.card {
+  background-image: url('/form-bg.png');
+  color: var(--color-text-formTofill);
+  border: none;
+  border-radius: 16px;
+}
+
+.card.overlay {
+  position: relative;
+  z-index: 1;
+}
+
+.control-row {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.key {
+  background-color: #fff;
+  color: #333;
+  font-weight: bold;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1.5rem;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
