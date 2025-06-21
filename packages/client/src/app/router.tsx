@@ -8,6 +8,7 @@ import NotFoundPage from '../pages/error-pages/NotFoundPage'
 import PrivateRoute from './PrivateRoute'
 import AuthLayout from './AuthLayout'
 import { GamePage } from '../pages/GamePage'
+import GameEndPage from '../pages/GameEndPage'
 
 export const router = createBrowserRouter([
   {
@@ -46,5 +47,9 @@ export const router = createBrowserRouter([
   {
     path: '*',
     element: <NotFoundPage />,
+  },
+  {
+    path: 'gameend',
+    element: <GameEndPage />,
   },
 ])
