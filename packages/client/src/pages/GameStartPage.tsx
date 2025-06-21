@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './GameStartPage.css'
 import Button from '../components/Button'
 import '../components/FormToFill.css'
+import { Link } from 'react-router-dom'
 
 const GameStartPage = () => {
   return (
@@ -23,7 +24,9 @@ const GameStartPage = () => {
             <div className="key">→</div>
           </div>
         </div>
-        <Button className="btn btn-light button__bgc">Старт</Button>
+        <Link to="/game">
+          <Button className="btn btn-light button__bgc">Старт</Button>
+        </Link>
       </div>
     </div>
   )
