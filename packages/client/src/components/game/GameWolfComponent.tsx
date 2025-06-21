@@ -1,29 +1,32 @@
-import { KeyDownResponseInterface, PositionInterface } from './GameInterfaces'
-import changeWolfPosition from '../../utils/helpers/changeWolfPosition'
+import { type TKeyDownResponse } from './GameInterfaces'
+import changeWolfPosition from './helpers/changeWolfPosition'
 import React from 'react'
 
-interface WolfProps {
-  positionValue: KeyDownResponseInterface
+type TProps = {
+  positionValue: TKeyDownResponse
   layoutWidth: number
   layoutHeight: number
 }
 
-const GameWolfComponent = (props: WolfProps) => {
-  const width = props.layoutWidth / 6,
-    height = props.layoutHeight / 3,
-    { top, left } = changeWolfPosition(
-      props.positionValue.position as PositionInterface,
-      props.layoutWidth,
-      props.layoutHeight
-    )
+const GameWolfComponent = (props: TProps) => {
+  const { positionValue, layoutWidth, layoutHeight } = props
+
+  const wolfWidth = layoutWidth / 6,
+    wolfHeight = layoutHeight / 3
+
+  const { top, left } = changeWolfPosition(
+    positionValue,
+    layoutWidth,
+    layoutHeight
+  )
 
   return (
     <div
-      className={`wolf-${props.positionValue.className}`}
+      className={`wolf-${positionValue.className}`}
       style={{
-        backgroundImage: `url(${props.positionValue.imageUrl})`,
-        width: `${width}px`,
-        height: `${height}px`,
+        backgroundImage: `url(${positionValue.imageUrl})`,
+        width: `${wolfWidth}px`,
+        height: `${wolfHeight}px`,
         top: `${top}px`,
         left: `${left}px`,
       }}

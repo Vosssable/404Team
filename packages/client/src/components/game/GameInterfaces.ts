@@ -1,23 +1,18 @@
-export interface KeyDownResponseInterface {
-  position: string
+export type TKeyDownResponse = {
+  position: TPosition
   className: string
   imageUrl: string
 }
 
-export type PositionInterface =
-  | 'Center'
-  | 'Right'
-  | 'Left'
-  | 'UpperRight'
-  | 'UpperLeft'
+export type TPosition = 'Center' | 'Right' | 'Left' | 'UpperRight' | 'UpperLeft'
 
-export interface LineInterface {
+export type TLine = {
   start: { x: number; y: number }
   end: { x: number; y: number }
-  index: PositionInterface
+  index: TPosition
 }
 
-export interface EggInterface {
+export type TEgg = {
   line: number
   progress: number
   stage: number

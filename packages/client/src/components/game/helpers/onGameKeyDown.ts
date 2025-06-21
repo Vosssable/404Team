@@ -1,9 +1,9 @@
-import { KeyDownResponseInterface } from '../../components/game/GameInterfaces'
+import { type TKeyDownResponse } from '../GameInterfaces'
 
 const onGameKeyDown = (
   e: KeyboardEvent,
   previous: string
-): KeyDownResponseInterface | undefined => {
+): TKeyDownResponse | undefined => {
   switch (e.key.toLowerCase()) {
     case 'arrowup':
     case 'w':
@@ -27,7 +27,7 @@ const onGameKeyDown = (
 function checkPosition(
   newPosKey: string,
   previousPos: string
-): KeyDownResponseInterface | undefined {
+): TKeyDownResponse | undefined {
   if (previousPos.includes(newPosKey)) return
 
   if (newPosKey === 'Center') return positionState.CENTER

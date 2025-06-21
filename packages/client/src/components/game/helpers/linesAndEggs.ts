@@ -1,8 +1,4 @@
-import {
-  EggInterface,
-  LineInterface,
-  PositionInterface,
-} from '../../components/game/GameInterfaces'
+import { type TEgg, type TLine, type TPosition } from '../GameInterfaces'
 import React from 'react'
 
 const linesAndEggs = (width: number, height: number) => {
@@ -11,30 +7,30 @@ const linesAndEggs = (width: number, height: number) => {
       //левая верхняя
       start: { x: width / 5, y: height / 3 - 10 },
       end: { x: width / 3 - 5, y: height / 2 - 60 },
-      index: 'UpperLeft' as PositionInterface,
+      index: 'UpperLeft' as TPosition,
     },
     {
       //левая нижняя
       start: { x: width / 5 + 20, y: (2 * height) / 3 - 80 },
       end: { x: (2 * width) / 5 - 80, y: (3 * height) / 4 - 50 },
-      index: 'Left' as PositionInterface,
+      index: 'Left' as TPosition,
     },
     {
       //правая верхняя
       start: { x: (5 * width) / 6 - 50, y: height / 3 + 10 },
       end: { x: (2 * width) / 3 + 15, y: height / 2 - 40 },
-      index: 'UpperRight' as PositionInterface,
+      index: 'UpperRight' as TPosition,
     },
     {
       //правая нижняя
       start: { x: (5 * width) / 6 - 70, y: height / 2 + 75 },
       end: { x: (2 * width) / 3 - 25, y: (3 * height) / 4 - 30 },
-      index: 'Right' as PositionInterface,
+      index: 'Right' as TPosition,
     },
   ]
 }
 
-const drawLine = (line: LineInterface, ctx: CanvasRenderingContext2D) => {
+const drawLine = (line: TLine, ctx: CanvasRenderingContext2D) => {
   ctx.beginPath()
   ctx.moveTo(line.start.x, line.start.y)
   ctx.lineTo(line.end.x, line.end.y)
@@ -43,7 +39,7 @@ const drawLine = (line: LineInterface, ctx: CanvasRenderingContext2D) => {
   ctx.stroke()
 }
 
-const drawEgg = (egg: EggInterface, ctx: CanvasRenderingContext2D) => {
+const drawEgg = (egg: TEgg, ctx: CanvasRenderingContext2D) => {
   ctx.save()
   ctx.translate(egg.x, egg.y)
   ctx.rotate(egg.rotation)
@@ -57,8 +53,8 @@ const drawEgg = (egg: EggInterface, ctx: CanvasRenderingContext2D) => {
 
 // Создаем яичко
 const createEgg = (
-  eggsRef: React.MutableRefObject<EggInterface[]>,
-  linesRef: React.MutableRefObject<LineInterface[]>
+  eggsRef: React.MutableRefObject<TEgg[]>,
+  linesRef: React.MutableRefObject<TLine[]>
 ) => {
   const lineIndex = Math.floor(Math.random() * linesRef.current.length),
     line = linesRef.current[lineIndex]
@@ -75,8 +71,8 @@ const createEgg = (
 }
 
 const updateEggs = (
-  eggsRef: React.MutableRefObject<EggInterface[]>,
-  linesRef: React.MutableRefObject<LineInterface[]>
+  eggsRef: React.MutableRefObject<TEgg[]>,
+  linesRef: React.MutableRefObject<TLine[]>
 ) => {
   const now = Date.now(),
     eggs = eggsRef.current,

@@ -5,19 +5,19 @@ import {
   drawLine,
   linesAndEggs,
   updateEggs,
-} from '../../utils/helpers/linesAndEggs'
-import { EggInterface, LineInterface } from './GameInterfaces'
+} from './helpers/linesAndEggs'
+import { type TEgg, type TLine } from './GameInterfaces'
 
-interface CanvasProps {
+type TProps = {
   width: number
   height: number
 }
 
-const GameTest = (props: CanvasProps) => {
+const GameCanvasComponent = (props: TProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null),
     animationRef = useRef<number>(),
-    eggsRef = useRef<EggInterface[]>([]),
-    linesRef = useRef<LineInterface[]>([])
+    eggsRef = useRef<TEgg[]>([]),
+    linesRef = useRef<TLine[]>([])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -29,7 +29,6 @@ const GameTest = (props: CanvasProps) => {
     // Создаем линии
     linesRef.current = linesAndEggs(props.width, props.height)
 
-    // lumus --*
     const animate = () => {
       ctx.clearRect(0, 0, props.width, props.height)
 
@@ -59,4 +58,4 @@ const GameTest = (props: CanvasProps) => {
   return <canvas ref={canvasRef} width={props.width} height={props.height} />
 }
 
-export default GameTest
+export default GameCanvasComponent

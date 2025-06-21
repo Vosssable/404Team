@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import onGameKeyDown from '../../utils/helpers/onGameKeyDown'
+import onGameKeyDown from './helpers/onGameKeyDown'
 import GameWolfComponent from './GameWolfComponent'
-import { KeyDownResponseInterface } from './GameInterfaces'
-import GameTest from './GameTest'
+import { type TKeyDownResponse } from './GameInterfaces'
+import GameCanvasComponent from './GameCanvasComponent'
 import './GameStyles.css'
 
 let previousPosition = 'Center'
 
 const GameLayout = () => {
-  const [positionValue, changePositionValue] = useState({
+  const [positionValue, changePositionValue] = useState<TKeyDownResponse>({
     position: 'Center',
     className: 'center',
     imageUrl: '/game-wolf-center.png',
-  } as KeyDownResponseInterface)
+  })
 
   const [absValues, setAbsValues] = useState({
     width: window.innerWidth,
@@ -41,7 +41,7 @@ const GameLayout = () => {
     return () => {
       window.removeEventListener('keydown', onKeyDown)
       window.removeEventListener('resize', handleResize)
-    } //на всякий удаляем при размонтировании волчары
+    }
   }, [])
 
   return (
@@ -51,7 +51,7 @@ const GameLayout = () => {
         layoutHeight={absValues.height}
         layoutWidth={absValues.width}
       />
-      <GameTest width={absValues.width} height={absValues.height} />
+      <GameCanvasComponent width={absValues.width} height={absValues.height} />
     </div>
   )
 }

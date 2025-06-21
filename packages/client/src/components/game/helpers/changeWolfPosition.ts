@@ -1,14 +1,11 @@
-import { PositionInterface } from '../../components/game/GameInterfaces'
+import { type TKeyDownResponse } from '../GameInterfaces'
 
 const changeWolfPosition = (
-  position: PositionInterface,
+  position: TKeyDownResponse,
   width: number,
   height: number
-): {
-  top: number
-  left: number
-} => {
-  switch (position) {
+): { top: number; left: number } => {
+  switch (position.position) {
     case 'Left':
       return { top: height / 1.8, left: width / 2.85 }
     case 'UpperLeft':
