@@ -8,7 +8,7 @@ import NotFoundPage from '../pages/error-pages/NotFoundPage'
 import PrivateRoute from './PrivateRoute'
 import AuthLayout from './AuthLayout'
 import { GamePage } from '../pages/GamePage'
-import Lider from '../pages/LiderBord'
+import Lider from '../pages/LiderBoard'
 
 export const router = createBrowserRouter([
   {
