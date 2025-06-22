@@ -11,17 +11,17 @@ const GameStartPage = () => {
         <h3 className="mb-4">Как играть:</h3>
         <div className="controls mb-5">
           <div className="control-row">
-            <div className="key">W</div>
-            <div className="key">A</div>
-            <div className="key">S</div>
-            <div className="key">D</div>
+            <div>W</div>
+            <div>A</div>
+            <div>S</div>
+            <div>D</div>
           </div>
           <div className="my-2">или</div>
           <div className="control-row">
-            <div className="key">↑</div>
-            <div className="key">←</div>
-            <div className="key">↓</div>
-            <div className="key">→</div>
+            <div>↑</div>
+            <div>←</div>
+            <div>↓</div>
+            <div>→</div>
           </div>
         </div>
         <Link to="/game">
