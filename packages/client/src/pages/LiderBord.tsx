@@ -7,8 +7,6 @@ import type { ColDef } from 'ag-grid-community'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
 
-import bg from '../assets/LiderBg.jpg'
-
 ModuleRegistry.registerModules([ClientSideRowModelModule])
 
 const Lider = () => {
@@ -63,7 +61,7 @@ const Lider = () => {
   )
 
   return (
-    <div className="lider-wrapper" style={{ backgroundImage: `url(${bg})` }}>
+    <div className="container-fluid bg__auth vw-100 vh-100 p-0 m-0 d-flex justify-content-center align-items-center">
       <div className="lider-container ag-theme-alpine-dark">
         {/* Декоративные элементы */}
         <div className="top-glow" />

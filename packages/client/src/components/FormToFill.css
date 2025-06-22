@@ -55,3 +55,8 @@
   color: var(--color-text-formTofill);
   text-decoration: none;
 }
+
+.tofill__avatar {
+  object-fit: cover;
+  border: 2px solid #ccc;
+}

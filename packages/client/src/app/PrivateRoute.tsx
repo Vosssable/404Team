@@ -5,9 +5,10 @@ const PrivateRoute = ({ children }: { children: ReactNode }) => {
   // TODO: В будущем здесь будет реальная проверка авторизации
   const isAuthenticated = false
 
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />
-  }
+  //закоментировал что бы проверить профиль
+  //if (!isAuthenticated) {
+  //return <Navigate to="/login" replace />
+  //}
 
   return <>{children}</>
 }

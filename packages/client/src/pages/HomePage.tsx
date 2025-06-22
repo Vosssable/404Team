@@ -48,7 +48,7 @@ const HomePage = () => {
               title="Таблица лидеров"
               text="Следи за результатами лучших игроков."
               buttonText="Посмотреть"
-              link="/leaderboard"
+              link="/liders"
             />
           </div>
         </div>
