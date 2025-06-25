@@ -1,13 +1,16 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
-import './GameStartPage.css'
-import Button from '../components/Button'
+import './GameStart.css'
+import Button from './Button'
 import '../components/FormToFill.css'
-import { Link } from 'react-router-dom'
 
-const GameStartPage = () => {
+type Props = {
+  onStart: () => void
+}
+
+const GameStart = ({ onStart }: Props) => {
   return (
     <div className="gamestart-background d-flex flex-column justify-content-center align-items-center min-vh-100 text-center">
-      <div className="card overlay p-5 rounded">
+      <div className="card custom-card overlay p-5 rounded">
         <h3 className="mb-4">Как играть:</h3>
         <div className="controls mb-5">
           <div className="control-row">
@@ -24,12 +27,12 @@ const GameStartPage = () => {
             <div>→</div>
           </div>
         </div>
-        <Link to="/game">
-          <Button className="btn btn-light button__bgc">Старт</Button>
-        </Link>
+        <Button className="btn btn-light button__bgc" onClick={onStart}>
+          Старт
+        </Button>
       </div>
     </div>
   )
 }
 
-export default GameStartPage
+export default GameStart

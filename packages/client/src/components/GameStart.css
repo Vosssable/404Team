@@ -16,14 +16,7 @@
   z-index: 0;
 }
 
-.card {
-  background-image: url('/form-bg.png');
-  color: var(--color-text-formTofill);
-  border: none;
-  border-radius: 16px;
-}
-
-.card.overlay {
+.gamestart-background .card {
   position: relative;
   z-index: 1;
 }
