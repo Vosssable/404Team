@@ -3,13 +3,14 @@ import { AgGridReact } from 'ag-grid-react'
 import { ModuleRegistry } from 'ag-grid-community'
 import { ClientSideRowModelModule } from 'ag-grid-community'
 import type { ColDef } from 'ag-grid-community'
+import './LeaderBoard.css'
 
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
 
 ModuleRegistry.registerModules([ClientSideRowModelModule])
 
-const Lider = () => {
+const Leader = () => {
   const [rowData] = useState([
     { id: 1, name: 'Игрок 1', score: 1500, time: '02:30' },
     { id: 2, name: 'Игрок 2', score: 1200, time: '03:10' },
@@ -92,4 +93,4 @@ const Lider = () => {
   )
 }
 
-export default Lider
+export default Leader

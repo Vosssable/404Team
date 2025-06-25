@@ -8,7 +8,7 @@ import NotFoundPage from '../pages/error-pages/NotFoundPage'
 import PrivateRoute from './PrivateRoute'
 import AuthLayout from './AuthLayout'
 import { GamePage } from '../pages/GamePage'
-import Lider from '../pages/LiderBoard'
+import Leader from '../pages/LeaderBoard'
 
 export const router = createBrowserRouter([
   {
@@ -49,7 +49,7 @@ export const router = createBrowserRouter([
     element: <NotFoundPage />,
   },
   {
-    path: 'liders',
-    element: <Lider />,
+    path: 'leaders',
+    element: <Leader />,
   },
 ])
