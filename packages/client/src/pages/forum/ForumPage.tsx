@@ -1,24 +1,6 @@
-import React from 'react'
 import styles from './ForumPage.module.css'
 import { Link, useNavigate } from 'react-router-dom'
-import { ForumTopic } from '../../types/forum'
-
-const mockTopics: ForumTopic[] = [
-  {
-    id: '1',
-    title: 'Первый топик',
-    content: 'Обсуждение игры',
-    author: 'User1',
-    createdAt: '2024-06-01',
-  },
-  {
-    id: '2',
-    title: 'Вопросы по механике',
-    content: 'Задавайте вопросы!',
-    author: 'User2',
-    createdAt: '2024-06-02',
-  },
-]
+import { mockTopics } from './mockForumData'
 
 const ForumPage = () => {
   const navigate = useNavigate()

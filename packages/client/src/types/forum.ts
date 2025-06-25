@@ -11,5 +11,7 @@ export interface ForumComment {
   topicId: string
   content: string
   author: string
+  userId: string
   createdAt: string
+  isRead?: boolean
 }
