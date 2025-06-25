@@ -7,9 +7,7 @@ export const GamePage = () => {
   return (
     <div>
       {started ? (
-        <div>
-          <h1>Страница игры</h1>
-        </div>
+        <GameLayout />
       ) : (
         <GameStart onStart={() => setStarted(true)} />
       )}
