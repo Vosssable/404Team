@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import styles from './ForumPage.module.css'
-import { mockTopics, mockComments } from './mockForumData'
+import { mockTopics, mockComments } from './lib/mockForumData'
 import { ForumComment } from '../../types/forum'
 
 const currentUserId = 'user2' // временно, потом брать из auth

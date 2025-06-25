@@ -8,8 +8,8 @@ import NotFoundPage from '../pages/error-pages/NotFoundPage'
 import PrivateRoute from './PrivateRoute'
 import AuthLayout from './AuthLayout'
 import { GamePage } from '../pages/GamePage'
-import ForumCreateTopicPage from '../pages/forum/ForumCreateTopicPage'
 import ForumTopicPage from '../pages/forum/ForumTopicPage'
+import ForumCreateTopicPage from '../pages/forum/ForumCreateTopicPage'
 
 export const router = createBrowserRouter([
   {

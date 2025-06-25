@@ -12,16 +12,19 @@ type Props = {
   buttonText: string
   href: string
   linkText: string
+  onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
 const formToFill = (props: Props) => {
+  const { onSubmit, description, inputs, buttonText, href, linkText } = props
+
   return (
     <>
       <div className="card w-25 p-2 tofill__block">
         <div className="tofill__wrapper">
-          <h2 className="text-center tofill__heading">{props.description}</h2>
-          <form action="/" method="POST">
-            {props.inputs.map(input => (
+          <h2 className="text-center tofill__heading">{description}</h2>
+          <form action="/" method="POST" onSubmit={onSubmit}>
+            {inputs.map(input => (
               <div className="mb-1" key={input.id}>
                 <label className="form-label tofill__label" htmlFor={input.id}>
                   {input.label}
@@ -37,11 +40,11 @@ const formToFill = (props: Props) => {
             <Button
               className="btn btn-primary w-100 mt-4 button__bgc"
               type="submit">
-              {props.buttonText}
+              {buttonText}
             </Button>
             <div className="text-center m-1">
-              <a className="tofill__link" href={props.href}>
-                {props.linkText}
+              <a className="tofill__link" href={href}>
+                {linkText}
               </a>
             </div>
           </form>

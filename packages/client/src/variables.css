@@ -4,4 +4,14 @@
   --alt-bg-formTofill: #ffbe73;
   --alt-text-formTofill: #ffbe73;
   --color-border-formTofill: saddlebrown;
+
+  /* Forum */
+  --forum-bg: #fff7e6;
+  --forum-border: #ffb347;
+  --forum-title: #7a4a13;
+  --forum-card: #fff7e6;
+  --forum-shadow: #ffb34722;
+  --forum-modal-bg: #fff7e6;
+  --forum-meta: #a67c52;
+  --forum-btn-shadow: #0001;
 }
