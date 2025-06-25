@@ -1,0 +1,200 @@
+body {
+  background: url('/img/background.jpg') center/cover no-repeat fixed;
+  min-height: 100vh;
+}
+
+.forumRoot {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 222, 173, 0.18);
+}
+
+.forumModal {
+  background: #fff7e6;
+  color: #7a4a13;
+  border-radius: 28px;
+  box-shadow: 0 8px 40px #ffb34722;
+  padding: 44px 36px;
+  max-width: 700px;
+  width: 100%;
+  margin: 40px auto;
+  border: 2.5px solid #ffb347;
+  backdrop-filter: blur(2px);
+}
+
+.forumTitle {
+  color: #7a4a13;
+  font-size: 38px;
+  font-family: 'Press Start 2P', cursive;
+  font-weight: 900;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.forumTitle::before {
+  content: '🗨️';
+  font-size: 2.1rem;
+}
+
+.topicsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.buttons {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.createTopicBtn {
+  background: #fff7e6;
+  color: #7a4a13;
+  border: 2px solid #ffb347;
+  border-radius: 10px;
+  padding: 8px 22px;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #ffb34722;
+}
+
+.createTopicBtn:hover {
+  background: #ffe4b3;
+  color: #7a4a13;
+  box-shadow: 0 4px 16px #ffb34733;
+}
+
+.topicsList {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.topicCard {
+  background: #fff7e6;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px #0001;
+  border: 1.5px solid #ffb347;
+  margin-bottom: 0;
+  transition: box-shadow 0.2s, border 0.2s;
+  overflow: hidden;
+}
+.topicCard:hover {
+  box-shadow: 0 8px 32px #ffb34733;
+}
+
+.topicLink {
+  display: block;
+  text-decoration: none;
+  padding: 16px;
+}
+
+.topicTitle {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #7a4a13;
+  margin-bottom: 2px;
+}
+.topicMeta {
+  color: #a67c52;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}
+.topicPreview {
+  color: #7a4a13;
+  font-size: 1.05rem;
+  opacity: 0.95;
+}
+
+.topicContent {
+  background: var(--alt-bg-formTofill);
+  color: var(--color-text-formTofill);
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 28px;
+  border: 1px solid var(--color-border-formTofill);
+  box-shadow: 0 2px 8px #0001;
+}
+
+.commentsTitle {
+  color: var(--color-text-formTofill);
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.commentCard {
+  background: var(--alt-bg-formTofill);
+  color: var(--color-text-formTofill);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  border: 1px solid var(--color-border-formTofill);
+  box-shadow: 0 1px 4px #0001;
+  transition: box-shadow 0.2s;
+}
+.commentCard:hover {
+  box-shadow: 0 4px 16px #0002;
+}
+
+.commentAuthor {
+  font-weight: 600;
+  color: var(--color-text-formTofill);
+}
+
+.commentDate {
+  color: var(--alt-text-formTofill);
+  font-size: 0.9rem;
+}
+
+.addCommentForm textarea {
+  background: var(--alt-bg-formTofill);
+  color: var(--color-text-formTofill);
+  border: 1px solid var(--color-border-formTofill);
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 8px;
+  width: 100%;
+  resize: vertical;
+  font-size: 1rem;
+  box-shadow: 0 1px 4px #0001;
+}
+
+.addCommentBtn {
+  background: var(--color-bg-formTofill);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 32px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #0001;
+}
+.addCommentBtn:hover {
+  background: var(--alt-bg-formTofill);
+  color: var(--color-text-formTofill);
+}
+
+.topicInput {
+  background: var(--alt-bg-formTofill);
+  color: var(--color-text-formTofill);
+  border: 1px solid var(--color-border-formTofill);
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 8px;
+  width: 100%;
+  font-size: 1.1rem;
+  box-shadow: 0 1px 4px #0001;
+}

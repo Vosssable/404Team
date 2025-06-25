@@ -29,3 +29,28 @@ export const registerProps = {
   href: '/login',
   linkText: 'Войти',
 }
+
+export const profileProps = {
+  description: 'Профиль',
+  inputs: [
+    { type: 'text', id: 'firstName', label: 'Имя', name: 'first_name' },
+    { type: 'text', id: 'lastName', label: 'Фамилия', name: 'second_name' },
+    { type: 'text', id: 'login', label: 'Логин', name: 'login' },
+    { type: 'tel', id: 'tel', label: 'Телефон', name: 'phone' },
+    { type: 'email', id: 'email', label: 'Почта', name: 'email' },
+  ],
+  buttonText: 'Сохранить',
+  href: '/',
+  linkText: 'На главную',
+}
+
+export const createTopicProps = {
+  description: 'Создать топик',
+  inputs: [
+    { type: 'text', id: 'title', label: 'Заголовок', name: 'title' },
+    { type: 'textarea', id: 'content', label: 'Содержание', name: 'content' },
+  ],
+  buttonText: 'Создать',
+  href: '/forum',
+  linkText: 'К списку топиков',
+}

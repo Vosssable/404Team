@@ -3,11 +3,13 @@ import HomePage from '../pages/HomePage'
 import LoginPage from '../pages/LoginPage'
 import RegisterPage from '../pages/RegisterPage'
 import ProfilePage from '../pages/ProfilePage'
-import ForumPage from '../pages/ForumPage'
+import ForumPage from '../pages/forum/ForumPage'
 import NotFoundPage from '../pages/error-pages/NotFoundPage'
 import PrivateRoute from './PrivateRoute'
 import AuthLayout from './AuthLayout'
 import { GamePage } from '../pages/GamePage'
+import ForumCreateTopicPage from '../pages/forum/ForumCreateTopicPage'
+import ForumTopicPage from '../pages/forum/ForumTopicPage'
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +44,14 @@ export const router = createBrowserRouter([
   {
     path: '/forum',
     element: <ForumPage />,
+  },
+  {
+    path: '/forum/create',
+    element: <ForumCreateTopicPage />,
+  },
+  {
+    path: '/forum/:topicId',
+    element: <ForumTopicPage />,
   },
   {
     path: '*',
