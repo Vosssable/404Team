@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import GameStart from '../components/GameStart'
+import GameLayout from '../components/game/GameLayout'
 
 export const GamePage = () => {
   const [started, setStarted] = useState(false)
