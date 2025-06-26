@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './ForumPage.module.css'
 import FormToFill from '../../components/FormToFill'
-import { createTopicProps } from './lib/formConfig'
+import { createTopicFormConfig } from './lib/formConfig'
 
 const ForumCreateTopicPage = () => {
   const navigate = useNavigate()
@@ -15,7 +15,7 @@ const ForumCreateTopicPage = () => {
 
   return (
     <div className={styles.forumRoot}>
-      <FormToFill {...createTopicProps} onSubmit={handleSubmit} />
+      <FormToFill {...createTopicFormConfig} onSubmit={handleSubmit} />
     </div>
   )
 }

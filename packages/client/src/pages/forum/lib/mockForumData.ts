@@ -1,4 +1,4 @@
-import { ForumTopic, ForumComment } from '../../../types/forum'
+import { ForumTopic, ForumComment } from './forumTypes'
 
 export const mockTopics: ForumTopic[] = [
   {

@@ -2,7 +2,8 @@ import React, { useMemo, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import styles from './ForumPage.module.css'
 import { mockTopics, mockComments } from './lib/mockForumData'
-import { ForumComment } from '../../types/forum'
+import { ForumComment } from './lib/forumTypes'
+import { AddCommentForm } from './AddCommentForm'
 
 const currentUserId = 'user2' // временно, потом брать из auth
 
@@ -76,24 +77,12 @@ const ForumTopicPage = () => {
             </div>
           ))}
         </div>
-        <form onSubmit={handleSubmit} className={styles.addCommentForm}>
-          <textarea
-            rows={3}
-            value={comment}
-            onChange={e => setComment(e.target.value)}
-            placeholder="Ваше сообщение..."
-          />
-          <div className={styles.buttons}>
-            <button className={styles.addCommentBtn} type="submit">
-              Отправить
-            </button>
-            <button
-              className={styles.createTopicBtn}
-              onClick={() => navigate(-1)}>
-              ← Назад
-            </button>
-          </div>
-        </form>
+        <AddCommentForm
+          comment={comment}
+          onCommentChange={setComment}
+          onSubmit={handleSubmit}
+          navigateBack={() => navigate(-1)}
+        />
       </div>
     </div>
   )

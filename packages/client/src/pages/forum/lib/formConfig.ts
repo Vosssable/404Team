@@ -1,4 +1,6 @@
-export const createTopicProps = {
+import { FormConfig } from '../../../types/formConfig'
+
+export const createTopicFormConfig: FormConfig = {
   description: 'Создать топик',
   inputs: [
     { type: 'text', id: 'title', label: 'Заголовок', name: 'title' },
@@ -9,7 +11,7 @@ export const createTopicProps = {
   linkText: 'К списку топиков',
 }
 
-export const createCommentProps = {
+export const createCommentFormConfig: FormConfig = {
   description: 'Добавить комментарий',
   inputs: [
     { type: 'textarea', id: 'content', label: 'Комментарий', name: 'content' },
