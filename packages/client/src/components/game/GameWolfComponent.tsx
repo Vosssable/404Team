@@ -1,15 +1,16 @@
-import { type TKeyDownResponse } from './GameInterfaces'
+import { type TGameStatus, type TKeyDownResponseEx } from './GameInterfaces'
 import changeWolfPosition from './helpers/changeWolfPosition'
 import React from 'react'
 
 type TProps = {
-  positionValue: TKeyDownResponse
+  positionValue: TKeyDownResponseEx
   layoutWidth: number
   layoutHeight: number
+  gameStatus: TGameStatus
 }
 
 const GameWolfComponent = (props: TProps) => {
-  const { positionValue, layoutWidth, layoutHeight } = props
+  const { positionValue, layoutWidth, layoutHeight, gameStatus } = props
 
   const wolfWidth = layoutWidth / 6,
     wolfHeight = layoutHeight / 3

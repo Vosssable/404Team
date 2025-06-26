@@ -1,4 +1,5 @@
-import { type TKeyDownResponse } from '../GameInterfaces'
+import type { TKeyDownResponse, TKeyDownResponseEx } from '../GameInterfaces'
+import { changePositionValue } from './changeWolfPosition'
 
 const onGameKeyDown = (
   e: KeyboardEvent,
@@ -7,23 +8,29 @@ const onGameKeyDown = (
   switch (e.code) {
     case 'ArrowUp':
     case 'KeyW':
-      return checkPosition('Up', previous)
+      changePosition(checkPosition('Up', previous))
+      return
     case 'ArrowLeft':
     case 'KeyA':
-      return checkPosition('Left', previous)
+      changePosition(checkPosition('Left', previous))
+      return
     case 'ArrowRight':
     case 'KeyD':
-      return checkPosition('Right', previous)
+      changePosition(checkPosition('Right', previous))
+      return
     case 'ArrowDown':
     case 'KeyS':
-      return checkPosition('Down', previous)
+      changePosition(checkPosition('Down', previous))
+      return
+    case 'KeyP':
+      return 'PAUSE'
   }
 }
 
 function checkPosition(
   newPosKey: string,
   previousPos: string
-): TKeyDownResponse | undefined {
+): TKeyDownResponseEx | undefined {
   if (previousPos.includes(newPosKey)) return
 
   if (newPosKey === 'Center') return positionState.CENTER
@@ -74,5 +81,11 @@ const positionState = {
     className: 'center',
   },
 } as const
+
+const changePosition = (position: TKeyDownResponseEx | undefined) => {
+  if (!position) return
+
+  changePositionValue(position)
+}
 
 export default onGameKeyDown

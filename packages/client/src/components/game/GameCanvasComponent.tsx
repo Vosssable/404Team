@@ -6,11 +6,12 @@ import {
   linesAndEggs,
   updateEggs,
 } from './helpers/linesAndEggs'
-import { type TEgg, type TLine } from './GameInterfaces'
+import { type TEgg, type TGameStatus, type TLine } from './GameInterfaces'
 
 type TProps = {
   width: number
   height: number
+  gameStatus: TGameStatus
 }
 
 const GameCanvasComponent = (props: TProps) => {
@@ -19,7 +20,7 @@ const GameCanvasComponent = (props: TProps) => {
     eggsRef = useRef<TEgg[]>([]),
     linesRef = useRef<TLine[]>([])
 
-  const { width, height } = props
+  const { width, height, gameStatus } = props
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -48,7 +49,6 @@ const GameCanvasComponent = (props: TProps) => {
       createEgg(eggsRef, linesRef)
     }, 1000)
 
-    // Очистка при размонтировании и стираем интервал на всякий
     return () => {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current)

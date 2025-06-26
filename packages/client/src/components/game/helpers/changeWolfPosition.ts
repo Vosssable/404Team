@@ -1,7 +1,15 @@
-import { type TKeyDownResponse } from '../GameInterfaces'
+import { type TKeyDownResponseEx } from '../GameInterfaces'
+import { useState } from 'react'
+
+export const [positionValue, changePositionValue] =
+  useState<TKeyDownResponseEx>({
+    position: 'Center',
+    className: 'center',
+    imageUrl: '/game-wolf-center.png',
+  })
 
 const changeWolfPosition = (
-  position: TKeyDownResponse,
+  position: TKeyDownResponseEx,
   width: number,
   height: number
 ): { top: number; left: number } => {
