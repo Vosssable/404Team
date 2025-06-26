@@ -3,6 +3,10 @@ import Button from './Button'
 import './FormToFill.css'
 import { Validation } from '../hooks/Validation'
 import { validationHook } from '../hooks/ValidationHook'
+import { registration } from '../api/registration'
+import { authorization } from '../api/authorization'
+import { setUser } from '../store/userSlice'
+import { useAppDispatch } from '../store/storeHooks'
 
 type Props = {
   description: string
@@ -24,9 +28,37 @@ function FormToFill({
   href,
   linkText,
 }: Props) {
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = e => {
+  const dispatch = useAppDispatch()
+
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async e => {
     e.preventDefault()
-    validationHook(e.currentTarget)
+    const form = e.currentTarget
+    if (!validationHook(form)) return
+
+    const data = Object.fromEntries(new FormData(form)) as Record<
+      string,
+      string
+    >
+    const isRegistration = inputs.some(i => i.name === 'first_name')
+
+    try {
+      if (isRegistration) {
+        const user = await registration({
+          first_name: data.first_name,
+          second_name: data.second_name,
+          login: data.login,
+          email: data.email,
+          password: data.password,
+          phone: data.phone,
+        })
+        dispatch(setUser(user))
+      } else {
+        await authorization(data.login, data.password)
+        dispatch(setUser({ login: data.login }))
+      }
+    } catch (err: any) {
+      alert(err.message ?? 'Ошибка запроса')
+    }
   }
 
   return (
