@@ -11,6 +11,9 @@
     "test": "jest ./"
   },
   "dependencies": {
+    "ag-grid-community": "^33.3.2",
+    "ag-grid-enterprise": "^33.3.2",
+    "ag-grid-react": "^33.3.2",
     "bootstrap": "^5.3.6",
     "classnames": "^2.5.1",
     "dotenv": "^16.0.2",

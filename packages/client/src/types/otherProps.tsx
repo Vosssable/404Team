@@ -29,3 +29,23 @@ export const registerProps = {
   href: '/login',
   linkText: 'Войти',
 }
+
+export const profileProps = {
+  description: 'Профиль',
+  inputs: [
+    { type: 'text', id: 'name', label: 'Имя', name: 'first_name' },
+    { type: 'text', id: 'firstName', label: 'Фамилия', name: 'second_name' },
+    { type: 'text', id: 'login', label: 'Логин', name: 'login' },
+    { type: 'tel', id: 'tel', label: 'Номер телефона', name: 'phone' },
+    { type: 'email', id: 'email', label: 'Почта', name: 'email' },
+    { type: 'password', id: 'password', label: 'Пароль', name: 'password' },
+    {
+      type: 'password',
+      id: 'retryPassword',
+      label: 'Повторите пароль',
+      name: 'retryPassword',
+    },
+  ],
+  buttonText: 'Изменить данные',
+  avatarUrl: '/default-avatar.png',
+}
