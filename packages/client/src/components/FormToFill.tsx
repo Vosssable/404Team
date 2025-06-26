@@ -5,8 +5,6 @@ import { Validation } from '../hooks/Validation'
 import { validationHook } from '../hooks/ValidationHook'
 import { registration } from '../api/registration'
 import { authorization } from '../api/authorization'
-import { setUser } from '../store/userSlice'
-import { useAppDispatch } from '../store/storeHooks'
 
 type Props = {
   description: string
@@ -28,8 +26,6 @@ function FormToFill({
   href,
   linkText,
 }: Props) {
-  const dispatch = useAppDispatch()
-
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async e => {
     e.preventDefault()
     const form = e.currentTarget
@@ -51,10 +47,8 @@ function FormToFill({
           password: data.password,
           phone: data.phone,
         })
-        dispatch(setUser(user))
       } else {
         await authorization(data.login, data.password)
-        dispatch(setUser({ login: data.login }))
       }
     } catch (err: any) {
       alert(err.message ?? 'Ошибка запроса')
