@@ -1,7 +1,5 @@
+import GameLayout from '../components/game/GameLayout'
+
 export const GamePage = () => {
-  return (
-    <div>
-      <h1>Страница игры</h1>
-    </div>
-  )
+  return <GameLayout />
 }
