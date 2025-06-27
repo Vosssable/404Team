@@ -10,47 +10,67 @@ type Props = {
     name: string
   }[]
   buttonText: string
-  href: string
-  linkText: string
+  href?: string
+  linkText?: string
+  avatarUrl?: string
   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
 const formToFill = (props: Props) => {
-  const { onSubmit, description, inputs, buttonText, href, linkText } = props
+  const {
+    onSubmit,
+    description,
+    inputs,
+    buttonText,
+    href,
+    linkText,
+    avatarUrl,
+  } = props
 
   return (
-    <>
-      <div className="card w-25 p-2 tofill__block">
-        <div className="tofill__wrapper">
-          <h2 className="text-center tofill__heading">{description}</h2>
-          <form action="/" method="POST" onSubmit={onSubmit}>
-            {inputs.map(input => (
-              <div className="mb-1" key={input.id}>
-                <label className="form-label tofill__label" htmlFor={input.id}>
-                  {input.label}
-                </label>
-                <input
-                  type={input.type}
-                  id={input.id}
-                  name={input.name}
-                  className="form-control tofill__input"
-                />
-              </div>
-            ))}
-            <Button
-              className="btn btn-primary w-100 mt-4 button__bgc"
-              type="submit">
-              {buttonText}
-            </Button>
+    <div className="card w-25 p-2 tofill__block">
+      <div className="tofill__wrapper">
+        {avatarUrl && (
+          <div className="text-center mb-3">
+            <img
+              src={avatarUrl}
+              alt="avatar"
+              className="tofill__avatar rounded-circle"
+              width={100}
+              height={100}
+            />
+          </div>
+        )}
+        <h2 className="text-center tofill__heading">{description}</h2>
+        <form action="/" method="POST" onSubmit={onSubmit}>
+          {inputs?.map(input => (
+            <div className="mb-1" key={input.id}>
+              <label className="form-label tofill__label" htmlFor={input.id}>
+                {input.label}
+              </label>
+              <input
+                type={input.type}
+                id={input.id}
+                name={input.name}
+                className="form-control tofill__input"
+              />
+            </div>
+          ))}
+          <Button
+            className="btn btn-primary w-100 mt-4 button__bgc"
+            type="submit">
+            {buttonText}
+          </Button>
+          {props.href && props.linkText && (
             <div className="text-center m-1">
               <a className="tofill__link" href={href}>
                 {linkText}
               </a>
             </div>
-          </form>
-        </div>
+          )}
+        </form>
       </div>
-    </>
+    </div>
   )
 }
 

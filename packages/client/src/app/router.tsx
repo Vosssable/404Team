@@ -10,6 +10,7 @@ import AuthLayout from './AuthLayout'
 import { GamePage } from '../pages/GamePage'
 import ForumTopicPage from '../pages/forum/ForumTopicPage'
 import ForumCreateTopicPage from '../pages/forum/ForumCreateTopicPage'
+import Leader from '../pages/LeaderBoard'
 
 export const router = createBrowserRouter([
   {
@@ -56,5 +57,9 @@ export const router = createBrowserRouter([
   {
     path: '*',
     element: <NotFoundPage />,
+  },
+  {
+    path: 'leaders',
+    element: <Leader />,
   },
 ])
