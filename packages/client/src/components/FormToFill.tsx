@@ -13,8 +13,9 @@ type Props = {
     name: string
   }[]
   buttonText: string
-  href: string
-  linkText: string
+  href?: string
+  linkText?: string
+  avatarUrl?: string
 }
 
 function FormToFill({
