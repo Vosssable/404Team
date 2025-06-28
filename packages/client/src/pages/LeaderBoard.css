@@ -1,0 +1,123 @@
+.lider-wrapper {
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.lider-container {
+  width: 80%;
+  max-width: 800px;
+  height: auto;
+  max-height: 80vh;
+  background-color: rgba(10, 20, 40, 0.65);
+  backdrop-filter: blur(8px);
+  border-radius: 16px;
+  border: 1px solid rgba(0, 200, 255, 0.3);
+  box-shadow: 0 0 15px rgba(0, 100, 255, 0.2), 0 0 30px rgba(0, 50, 150, 0.1),
+    inset 0 0 10px rgba(0, 200, 255, 0.2);
+  padding: 20px 25px;
+  position: relative;
+  overflow: hidden;
+}
+
+.top-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #0ff, transparent);
+  opacity: 0.6;
+}
+
+.center-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 200, 255, 0.3),
+    transparent
+  );
+}
+
+.title {
+  text-align: center;
+  color: rgba(0, 220, 255, 0.9);
+  margin: 0 0 20px 0;
+  font-size: 2.2rem;
+  font-weight: 600;
+  text-shadow: 0 0 10px rgba(0, 200, 255, 0.7);
+  letter-spacing: 3px;
+}
+
+.update-note {
+  text-align: center;
+  color: rgba(180, 220, 255, 0.7);
+  margin-top: 20px;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+
+.ag-theme-alpine-dark {
+  --ag-background-color: transparent;
+  --ag-foreground-color: rgba(200, 220, 255, 0.9);
+  --ag-border-color: rgba(0, 150, 255, 0.2);
+  --ag-header-background-color: rgba(0, 30, 60, 0.5);
+  --ag-header-foreground-color: rgba(100, 220, 255, 0.9);
+  --ag-odd-row-background-color: rgba(0, 20, 40, 0.3);
+  --ag-font-size: 16px;
+  --ag-font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+}
+
+.ag-header-cell-label {
+  justify-content: center;
+}
+
+.ag-cell {
+  display: flex;
+  align-items: center;
+  padding-left: 20px !important;
+}
+
+.row-class {
+  border-bottom: 1px solid rgba(0, 100, 200, 0.1) !important;
+  transition: all 0.3s ease;
+}
+
+.row-class:hover {
+  background-color: rgba(0, 80, 150, 0.3) !important;
+  transform: translateX(5px);
+}
+
+.ag-row:first-child {
+  background: rgba(0, 80, 150, 0.3) !important;
+}
+
+.ag-row:first-child .ag-cell {
+  font-size: 18px;
+  color: #ff0;
+}
+
+.ag-row:first-child::after {
+  content: '👑';
+  position: absolute;
+  left: 10px;
+  font-size: 24px;
+  filter: drop-shadow(0 0 5px gold);
+}
