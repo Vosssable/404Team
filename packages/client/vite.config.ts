@@ -15,18 +15,14 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      srcDir: 'public',
-      filename: 'service-worker.ts',
-      strategies: 'injectManifest',
-      injectRegister: false,
-      manifest: {
-        name: '404Team Game',
-        short_name: '404Game',
-        start_url: '/',
-        display: 'standalone',
-        background_color: '#ffffff',
-        theme_color: '#222',
-        // icons: [ ],
+      registerType: 'autoUpdate',
+      devOptions: {
+        enabled: true,
+      },
+      workbox: {
+        clientsClaim: true,
+        skipWaiting: true,
+        globPatterns: ['**/*.{js,css,html,png,jpg,jpeg,svg,gif}'],
       },
     }),
   ],

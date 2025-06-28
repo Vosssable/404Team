@@ -7,9 +7,16 @@ const PRECACHE_URLS = [
   '/',
   '/index.html',
   '/vite.svg',
-  '/src/assets/LiderBg.jpg',
-  '/public/img/background.jpg',
-  '/public/img/logo.png',
+  '/img/background.jpg',
+  '/img/logo.png',
+  '/images/error-pages/404-error.jpg',
+  '/images/error-pages/500-error.jpg',
+  '/auth-bg.jpg',
+  '/default-avatar.png',
+  '/form-bg.png',
+  '/game-bg.png',
+  '/game-wolf-center.png',
+  '/game-wolf-moving.png',
 ]
 
 // Установка воркера и кеширование файлов
@@ -30,7 +37,7 @@ this.addEventListener('install', event => {
 })
 
 // Активация воркера и удаление старых кешей
-this.addEventListener('activate', event => {
+self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
@@ -44,7 +51,7 @@ this.addEventListener('activate', event => {
 })
 
 // Перехват fetch-запросов
-this.addEventListener('fetch', event => {
+self.addEventListener('fetch', event => {
   event.respondWith(
     // Пытаемся найти ответ на такой запрос в кеше
     caches.match(event.request).then(response => {
@@ -77,12 +84,16 @@ this.addEventListener('fetch', event => {
             // Отдаём в основной поток ответ
             return response
           })
+          .catch(error => {
+            console.error('fetch error', error)
+            return null
+          })
       )
     })
   )
 })
 
-// navigator.serviceWorker.ready.then(reg => reg.sync.register('sync-messages'))
+// navigator.serviceWorker.ready.then(reg => reg.sync.register('sync-messages')) - пример использования на клиенте
 
 // Background Sync: обработка фоновой синхронизации при временном отсутствии интернета
 this.addEventListener('sync', event => {
@@ -91,25 +102,17 @@ this.addEventListener('sync', event => {
   }
 })
 
-// TODO: Добавить background sync, динамического кеширования и fallback-страниц
-
 // --- IndexedDB helpers для service worker. Полное описание работы в src/utils/idb-messages.ts ---
-type IMessageQueueItem = {
-  id?: number
-  content: string
-  createdAt: number
-  [key: string]: unknown
-}
 
 const DB_NAME = 'offline-messages-db'
 const STORE_NAME = 'messages'
 const DB_VERSION = 1
 
-function openDB(): Promise<IDBDatabase> {
+function openDB() {
   return new Promise((resolve, reject) => {
     const request = indexedDB.open(DB_NAME, DB_VERSION)
-    request.onupgradeneeded = event => {
-      const db = (event.target as IDBOpenDBRequest).result
+    request.onupgradeneeded = () => {
+      const db = request.result
       if (!db.objectStoreNames.contains(STORE_NAME)) {
         db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true })
       }
@@ -119,18 +122,18 @@ function openDB(): Promise<IDBDatabase> {
   })
 }
 
-async function getAllQueuedMessages(): Promise<IMessageQueueItem[]> {
+async function getAllQueuedMessages() {
   const db = await openDB()
   const tx = db.transaction(STORE_NAME, 'readonly')
   const store = tx.objectStore(STORE_NAME)
   return new Promise((resolve, reject) => {
     const request = store.getAll()
-    request.onsuccess = () => resolve(request.result as IMessageQueueItem[])
+    request.onsuccess = () => resolve(request.result)
     request.onerror = () => reject(request.error)
   })
 }
 
-async function clearQueuedMessages(): Promise<void> {
+async function clearQueuedMessages() {
   const db = await openDB()
   const tx = db.transaction(STORE_NAME, 'readwrite')
   const store = tx.objectStore(STORE_NAME)
