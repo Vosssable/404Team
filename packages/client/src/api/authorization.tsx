@@ -12,8 +12,8 @@ export async function authorization(
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      login: login,
-      password: password,
+      login,
+      password,
     }),
   })
 

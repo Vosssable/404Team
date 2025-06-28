@@ -1,31 +1,25 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom'
 import Button from './Button'
 import './FormToFill.css'
 import { Validation } from '../hooks/Validation'
 import { validationHook } from '../hooks/ValidationHook'
-import { registration } from '../api/registration'
-import { authorization } from '../api/authorization'
+import { useAppDispatch } from '../store/storeHooks'
+import { signInThunk, signUpThunk } from '../store/thunks/authThunk'
 
 type Props = {
   description: string
-  inputs: {
-    type: string
-    id: string
-    label: string
-    name: string
-  }[]
+  inputs: { type: string; id: string; label: string; name: string }[]
   buttonText: string
-  href: string
-  linkText: string
+  href?: string
+  linkText?: string
 }
 
-function FormToFill({
-  description,
-  inputs,
-  buttonText,
-  href,
-  linkText,
-}: Props) {
+function FormToFill(props: Props) {
+  const { description, inputs, buttonText, href, linkText } = props
+  const dispatch = useAppDispatch()
+  const isRegistration = useLocation().pathname === '/register'
+
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async e => {
     e.preventDefault()
     const form = e.currentTarget
@@ -35,23 +29,27 @@ function FormToFill({
       string,
       string
     >
-    const isRegistration = inputs.some(i => i.name === 'first_name')
 
     try {
       if (isRegistration) {
-        const user = await registration({
-          first_name: data.first_name,
-          second_name: data.second_name,
-          login: data.login,
-          email: data.email,
-          password: data.password,
-          phone: data.phone,
-        })
+        await dispatch(
+          signUpThunk({
+            first_name: data.first_name,
+            second_name: data.second_name,
+            login: data.login,
+            email: data.email,
+            password: data.password,
+            phone: data.phone,
+          })
+        ).unwrap()
       } else {
-        await authorization(data.login, data.password)
+        await dispatch(
+          signInThunk({ login: data.login, password: data.password })
+        ).unwrap()
       }
-    } catch (err: any) {
-      alert(err.message ?? 'Ошибка запроса')
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Неизвестная ошибка'
+      alert(msg)
     }
   }
 
@@ -75,11 +73,13 @@ function FormToFill({
               <span className="text-danger small"></span>
             </div>
           ))}
+
           <Button
             className="btn btn-primary w-100 mt-4 button__bgc"
             type="submit">
             {buttonText}
           </Button>
+
           <div className="text-center m-1">
             <a className="tofill__link" href={href}>
               {linkText}
