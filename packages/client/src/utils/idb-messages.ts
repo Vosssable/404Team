@@ -1,4 +1,3 @@
-// ---
 // Offline очередь сообщений для PWA
 //
 // Этот модуль реализует простую очередь сообщений в IndexedDB для поддержки offline-режима и background sync.
@@ -21,7 +20,7 @@
 // id — автогенерируется IndexedDB, content — основное содержимое, createdAt — время создания
 
 // Интерфейс сообщения для очереди
-type IMessageQueueItem = {
+type MessageQueueItem = {
   id?: number
   content: string
   createdAt: number
@@ -56,7 +55,7 @@ function openDB(): Promise<IDBDatabase> {
 // Если нет id, он будет сгенерирован автоматически
 
 export async function addMessageToQueue(
-  message: Omit<IMessageQueueItem, 'id'>
+  message: Omit<MessageQueueItem, 'id'>
 ): Promise<void> {
   const db = await openDB()
   const tx = db.transaction(STORE_NAME, 'readwrite')
@@ -71,13 +70,13 @@ export async function addMessageToQueue(
 // Получает все сообщения из очереди
 // Используется для отправки накопленных сообщений на сервер
 
-export async function getAllQueuedMessages(): Promise<IMessageQueueItem[]> {
+export async function getAllQueuedMessages(): Promise<MessageQueueItem[]> {
   const db = await openDB()
   const tx = db.transaction(STORE_NAME, 'readonly')
   const store = tx.objectStore(STORE_NAME)
   return new Promise((resolve, reject) => {
     const request = store.getAll()
-    request.onsuccess = () => resolve(request.result as IMessageQueueItem[])
+    request.onsuccess = () => resolve(request.result as MessageQueueItem[])
     request.onerror = () => reject(request.error)
   })
 }
