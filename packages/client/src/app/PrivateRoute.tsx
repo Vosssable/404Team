@@ -1,14 +1,17 @@
-import { ReactNode } from 'react'
 import { Navigate } from 'react-router-dom'
+import { useAppSelector } from '../store/storeHooks'
+import { ReactNode } from 'react'
 
-const PrivateRoute = ({ children }: { children: ReactNode }) => {
-  // TODO: В будущем здесь будет реальная проверка авторизации
-  const isAuthenticated = false
+type PrivateRouteProps = {
+  children: ReactNode
+}
 
-  //закоментировал что бы проверить профиль
-  //if (!isAuthenticated) {
-  //return <Navigate to="/login" replace />
-  //}
+const PrivateRoute = ({ children }: PrivateRouteProps) => {
+  const user = useAppSelector(state => state.user)
+
+  if (!user.login) {
+    return <Navigate to="/login" replace />
+  }
 
   return <>{children}</>
 }

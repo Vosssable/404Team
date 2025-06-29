@@ -13,23 +13,22 @@ type Props = {
   buttonText: string
   href?: string
   linkText?: string
+  onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
 function FormToFill(props: Props) {
-  const { description, inputs, buttonText, href, linkText } = props
+  const { description, inputs, buttonText, href, linkText, onSubmit } = props
   const dispatch = useAppDispatch()
   const isRegistration = useLocation().pathname === '/register'
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async e => {
+  const defaultSubmit: React.FormEventHandler<HTMLFormElement> = async e => {
     e.preventDefault()
     const form = e.currentTarget
     if (!validationHook(form)) return
-
     const data = Object.fromEntries(new FormData(form)) as Record<
       string,
       string
     >
-
     try {
       if (isRegistration) {
         await dispatch(
@@ -57,7 +56,7 @@ function FormToFill(props: Props) {
     <div className="card w-25 p-2 tofill__block">
       <div className="tofill__wrapper">
         <h2 className="text-center tofill__heading">{description}</h2>
-        <form onSubmit={handleSubmit} noValidate>
+        <form onSubmit={onSubmit ?? defaultSubmit} noValidate>
           {inputs.map(({ type, id, label, name }) => (
             <div className="mb-1" key={id}>
               <label className="form-label tofill__label" htmlFor={id}>
@@ -73,13 +72,11 @@ function FormToFill(props: Props) {
               <span className="text-danger small"></span>
             </div>
           ))}
-
           <Button
             className="btn btn-primary w-100 mt-4 button__bgc"
             type="submit">
             {buttonText}
           </Button>
-
           <div className="text-center m-1">
             <a className="tofill__link" href={href}>
               {linkText}
