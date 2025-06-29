@@ -1,11 +1,11 @@
-.gameend-background {
+.game_end-background {
   background-image: url('/img/background.jpg');
   background-size: cover;
   background-position: center;
   position: relative;
 }
 
-.gameend-background::after {
+.game_end-background::after {
   content: '';
   position: absolute;
   top: 0;
@@ -14,13 +14,6 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 0;
-}
-
-.card {
-  background-image: url('/form-bg.png');
-  color: var(--color-text-formTofill);
-  border: none;
-  border-radius: 16px;
 }
 
 .card.overlay {

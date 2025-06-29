@@ -6,8 +6,8 @@ import '../components/FormToFill.css'
 
 const GameEndPage = ({ score = 120 }) => {
   return (
-    <div className="gameend-background d-flex flex-column justify-content-center align-items-center min-vh-100 text-center">
-      <div className="card overlay p-5 rounded">
+    <div className="game_end-background d-flex flex-column justify-content-center align-items-center min-vh-100 text-center">
+      <div className="card custom-card overlay p-5 rounded">
         <h2 className="mb-4">Игра окончена!</h2>
 
         <img
