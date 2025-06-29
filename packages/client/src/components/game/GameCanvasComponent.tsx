@@ -6,12 +6,11 @@ import {
   linesAndEggs,
   updateEggs,
 } from './helpers/linesAndEggs'
-import { type TEgg, type TGameStatus, type TLine } from './GameInterfaces'
+import { type TEgg, type TLine } from './GameInterfaces'
 
 type TProps = {
   width: number
   height: number
-  gameStatus: TGameStatus
 }
 
 const GameCanvasComponent = (props: TProps) => {
@@ -20,7 +19,7 @@ const GameCanvasComponent = (props: TProps) => {
     eggsRef = useRef<TEgg[]>([]),
     linesRef = useRef<TLine[]>([])
 
-  const { width, height, gameStatus } = props
+  const { width, height } = props
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -55,7 +54,7 @@ const GameCanvasComponent = (props: TProps) => {
         clearInterval(interval)
       }
     }
-  }, [])
+  }, [height])
 
   return <canvas ref={canvasRef} width={width} height={height} />
 }

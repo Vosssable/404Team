@@ -1,31 +1,31 @@
-import { type TGameStatus, type TKeyDownResponseEx } from './GameInterfaces'
+// import { type TGameStatus, TKeyDownResponseEx } from './GameInterfaces'
 import changeWolfPosition from './helpers/changeWolfPosition'
 import React from 'react'
+import { RootState } from '../../store'
+import { useSelector } from 'react-redux'
 
 type TProps = {
-  positionValue: TKeyDownResponseEx
   layoutWidth: number
   layoutHeight: number
-  gameStatus: TGameStatus
+  // задел на паузу
+  // gameStatus: TGameStatus
 }
 
 const GameWolfComponent = (props: TProps) => {
-  const { positionValue, layoutWidth, layoutHeight, gameStatus } = props
+  const { layoutWidth, layoutHeight } = props
+
+  const position = useSelector((state: RootState) => state.wolfPosition)
 
   const wolfWidth = layoutWidth / 6,
     wolfHeight = layoutHeight / 3
 
-  const { top, left } = changeWolfPosition(
-    positionValue,
-    layoutWidth,
-    layoutHeight
-  )
+  const { top, left } = changeWolfPosition(position, layoutWidth, layoutHeight)
 
   return (
     <div
-      className={`wolf-${positionValue.className}`}
+      className={`wolf-${position.className}`}
       style={{
-        backgroundImage: `url(${positionValue.imageUrl})`,
+        backgroundImage: `url(${position.imageUrl})`,
         width: `${wolfWidth}px`,
         height: `${wolfHeight}px`,
         top: `${top}px`,

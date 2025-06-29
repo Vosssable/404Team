@@ -1,25 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import onGameKeyDown from './helpers/onGameKeyDown'
 import GameWolfComponent from './GameWolfComponent'
-import type { TGameStatus, TKeyDownResponseEx } from './GameInterfaces'
 import GameCanvasComponent from './GameCanvasComponent'
+import GamePropertiesComponent from './GamePropertiesComponent'
 import './GameStyles.css'
 
-let previousPosition = 'Center'
-
 const GameLayout = () => {
-  const [positionValue, changePositionValue] = useState<TKeyDownResponseEx>({
-    position: 'Center',
-    className: 'center',
-    imageUrl: '/game-wolf-center.png',
-  })
+  const [previousPosition, setPreviousPosition] = useState('Center')
 
   const [absValues, setAbsValues] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
   })
-
-  const [gameStatus, changeGameStatus] = useState<TGameStatus>('OFF')
 
   useEffect(() => {
     const handleResize = () => {
@@ -31,16 +23,11 @@ const GameLayout = () => {
 
     const onKeyDown = (e: KeyboardEvent) => {
       e.preventDefault()
-      const keyDown = onGameKeyDown(e, previousPosition)
-      if (!keyDown) return
-      if (keyDown === 'PAUSE') {
-        if (gameStatus === 'ON') changeGameStatus('PAUSE')
-        if (gameStatus === 'PAUSE') changeGameStatus('ON')
-        return
-      }
 
-      changePositionValue(keyDown)
-      previousPosition = keyDown.position
+      const newPosition = onGameKeyDown(e, previousPosition)
+      if (!newPosition || previousPosition === newPosition) return
+
+      setPreviousPosition(newPosition)
     }
 
     window.addEventListener('keydown', onKeyDown)
@@ -49,22 +36,16 @@ const GameLayout = () => {
       window.removeEventListener('keydown', onKeyDown)
       window.removeEventListener('resize', handleResize)
     }
-  }, [])
+  }, [previousPosition])
 
   return (
     <div id="game_wolf_layout">
+      <GamePropertiesComponent />
       <GameWolfComponent
-        gameStatus={gameStatus}
-        positionValue={positionValue}
         layoutHeight={absValues.height}
         layoutWidth={absValues.width}
       />
-      <GameCanvasComponent
-        width={absValues.width}
-        height={absValues.height}
-        gameStatus={gameStatus}
-        positionValue={positionValue}
-      />
+      <GameCanvasComponent width={absValues.width} height={absValues.height} />
     </div>
   )
 }
