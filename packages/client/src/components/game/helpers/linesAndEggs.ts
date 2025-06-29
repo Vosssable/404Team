@@ -1,5 +1,7 @@
 import { type TEgg, type TLine, type TPosition } from '../GameInterfaces'
 import React from 'react'
+import store from '../../../store'
+import { setProperties } from '../../../store/gameProperties'
 
 const linesAndEggs = (width: number, height: number) => {
   return [
@@ -109,6 +111,7 @@ const updateEggs = (
           break
         case 6:
           eggs.splice(i, 1)
+          updateProperties(line.index)
           break
       }
     }
@@ -124,6 +127,29 @@ const updateEggs = (
       }
       egg.y = line.start.y + (line.end.y - line.start.y) * egg.progress + 40
     }
+  }
+}
+
+function updateProperties(eggPosition: string) {
+  const storeState = store.getState(),
+    life = storeState.gameProperties.life,
+    score = storeState.gameProperties.score,
+    currentWolfPosition = storeState.wolfPosition.position
+
+  if (currentWolfPosition == eggPosition) {
+    store.dispatch(
+      setProperties({
+        life: life,
+        score: score + 10,
+      })
+    )
+  } else if (currentWolfPosition !== eggPosition) {
+    store.dispatch(
+      setProperties({
+        life: life - 1,
+        score: score,
+      })
+    )
   }
 }
 

@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import onGameKeyDown from './helpers/onGameKeyDown'
 import GameWolfComponent from './GameWolfComponent'
-import { type TKeyDownResponse } from './GameInterfaces'
 import GameCanvasComponent from './GameCanvasComponent'
+import GamePropertiesComponent from './GamePropertiesComponent'
 import './GameStyles.css'
 
-let previousPosition = 'Center'
-
 const GameLayout = () => {
-  const [positionValue, changePositionValue] = useState<TKeyDownResponse>({
-    position: 'Center',
-    className: 'center',
-    imageUrl: '/game-wolf-center.png',
-  })
+  const [previousPosition, setPreviousPosition] = useState('Center')
 
   const [absValues, setAbsValues] = useState({
     width: window.innerWidth,
@@ -29,11 +23,11 @@ const GameLayout = () => {
 
     const onKeyDown = (e: KeyboardEvent) => {
       e.preventDefault()
-      const keyDown = onGameKeyDown(e, previousPosition)
-      if (!keyDown) return
 
-      changePositionValue(keyDown)
-      previousPosition = keyDown.position
+      const newPosition = onGameKeyDown(e, previousPosition)
+      if (!newPosition || previousPosition === newPosition) return
+
+      setPreviousPosition(newPosition)
     }
 
     window.addEventListener('keydown', onKeyDown)
@@ -42,12 +36,12 @@ const GameLayout = () => {
       window.removeEventListener('keydown', onKeyDown)
       window.removeEventListener('resize', handleResize)
     }
-  }, [])
+  }, [previousPosition])
 
   return (
     <div id="game_wolf_layout">
+      <GamePropertiesComponent />
       <GameWolfComponent
-        positionValue={positionValue}
         layoutHeight={absValues.height}
         layoutWidth={absValues.width}
       />

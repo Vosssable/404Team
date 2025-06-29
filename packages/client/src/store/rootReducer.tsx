@@ -1,8 +1,10 @@
 import { combineReducers } from '@reduxjs/toolkit'
 import userReducer from './userSlice'
-import gameReducer from './gameSlice'
+import gamePropertiesReducer from './gameProperties'
+import wolfPositionReducer from './wolfPosition'
 
 export default combineReducers({
   user: userReducer,
-  game: gameReducer,
+  wolfPosition: wolfPositionReducer,
+  gameProperties: gamePropertiesReducer,
 })
