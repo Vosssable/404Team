@@ -1,10 +1,21 @@
-export type TKeyDownResponse = {
-  position: TPosition
-  className: string
-  imageUrl: string
-}
+export type TKeyDownResponse =
+  | {
+      position: TPosition
+      className: string
+      imageUrl: string
+    }
+  | 'PAUSE'
+
+export type TKeyDownResponseEx = Exclude<TKeyDownResponse, 'PAUSE'>
 
 export type TPosition = 'Center' | 'Right' | 'Left' | 'UpperRight' | 'UpperLeft'
+
+// export type TGameStatus = 'OFF' | 'ON' | 'PAUSE' | 'END'
+
+export type TGameProperties = {
+  score: number
+  life: number
+}
 
 export type TLine = {
   start: { x: number; y: number }

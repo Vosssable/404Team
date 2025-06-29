@@ -19,6 +19,8 @@ const GameCanvasComponent = (props: TProps) => {
     eggsRef = useRef<TEgg[]>([]),
     linesRef = useRef<TLine[]>([])
 
+  const { width, height } = props
+
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -27,10 +29,10 @@ const GameCanvasComponent = (props: TProps) => {
     if (!ctx) return
 
     // Создаем линии
-    linesRef.current = linesAndEggs(props.width, props.height)
+    linesRef.current = linesAndEggs(width, height)
 
     const animate = () => {
-      ctx.clearRect(0, 0, props.width, props.height)
+      ctx.clearRect(0, 0, width, height)
 
       linesRef.current.forEach(line => drawLine(line, ctx))
       updateEggs(eggsRef, linesRef)
@@ -46,16 +48,15 @@ const GameCanvasComponent = (props: TProps) => {
       createEgg(eggsRef, linesRef)
     }, 1000)
 
-    // Очистка при размонтировании и стираем интервал на всякий
     return () => {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current)
         clearInterval(interval)
       }
     }
-  }, [])
+  }, [height])
 
-  return <canvas ref={canvasRef} width={props.width} height={props.height} />
+  return <canvas ref={canvasRef} width={width} height={height} />
 }
 
 export default GameCanvasComponent
