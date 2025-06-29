@@ -4,6 +4,7 @@ import GameWolfComponent from './GameWolfComponent'
 import { type TKeyDownResponse } from './GameInterfaces'
 import GameCanvasComponent from './GameCanvasComponent'
 import './GameStyles.css'
+import { useFullscreen } from '../../hooks/useFullscreen'
 
 let previousPosition = 'Center'
 
@@ -19,6 +20,8 @@ const GameLayout = () => {
     height: window.innerHeight,
   })
 
+  const { toggleFullscreen } = useFullscreen()
+
   useEffect(() => {
     const handleResize = () => {
       setAbsValues({
@@ -28,6 +31,11 @@ const GameLayout = () => {
     }
 
     const onKeyDown = (e: KeyboardEvent) => {
+      if (e.code === 'KeyF') {
+        toggleFullscreen()
+        return
+      }
+
       e.preventDefault()
       const keyDown = onGameKeyDown(e, previousPosition)
       if (!keyDown) return
@@ -42,7 +50,7 @@ const GameLayout = () => {
       window.removeEventListener('keydown', onKeyDown)
       window.removeEventListener('resize', handleResize)
     }
-  }, [])
+  }, [toggleFullscreen])
 
   return (
     <div id="game_wolf_layout">

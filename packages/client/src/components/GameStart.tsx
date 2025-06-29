@@ -18,6 +18,7 @@ const GameStart = ({ onStart }: Props) => {
             <div>A</div>
             <div>S</div>
             <div>D</div>
+            <div>F</div>
           </div>
           <div className="my-2">или</div>
           <div className="control-row">
@@ -25,6 +26,7 @@ const GameStart = ({ onStart }: Props) => {
             <div>←</div>
             <div>↓</div>
             <div>→</div>
+            <div>Полноэкранный режим</div>
           </div>
         </div>
         <Button className="btn btn-light button__bgc" onClick={onStart}>
