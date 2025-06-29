@@ -9,8 +9,10 @@ type Props = {
 
 const GameStart = ({ onStart }: Props) => {
   return (
-    <div className="gamestart-background d-flex flex-column justify-content-center align-items-center min-vh-100 text-center">
-      <div className="card custom-card overlay p-5 rounded">
+    <div
+      className="bg-overlay d-flex flex-column justify-content-center align-items-center min-vh-100 text-center"
+      style={{ backgroundImage: "url('/img/background.jpg')" }}>
+      <div className="card overlay-card custom-card overlay p-5 rounded">
         <h3 className="mb-4">Как играть:</h3>
         <div className="controls mb-5">
           <div className="control-row">
