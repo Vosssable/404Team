@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './GameEndPage.css'
-import Button from '../components/Button'
+import Button from './Button'
 import '../components/FormToFill.css'
 
 const GameEndPage = ({ score = 120 }) => {
