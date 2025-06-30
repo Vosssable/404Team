@@ -11,17 +11,18 @@ import { type TEgg, type TLine } from './GameInterfaces'
 type TProps = {
   width: number
   height: number
+  isPaused?: boolean
 }
 
-const GameCanvasComponent = (props: TProps) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null),
-    animationRef = useRef<number>(),
-    eggsRef = useRef<TEgg[]>([]),
-    linesRef = useRef<TLine[]>([])
-
-  const { width, height } = props
+const GameCanvasComponent = ({ width, height, isPaused }: TProps) => {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const animationRef = useRef<number>()
+  const eggsRef = useRef<TEgg[]>([])
+  const linesRef = useRef<TLine[]>([])
 
   useEffect(() => {
+    if (isPaused) return
+
     const canvas = canvasRef.current
     if (!canvas) return
 
@@ -54,7 +55,7 @@ const GameCanvasComponent = (props: TProps) => {
         clearInterval(interval)
       }
     }
-  }, [height])
+  }, [height, isPaused])
 
   return <canvas ref={canvasRef} width={width} height={height} />
 }

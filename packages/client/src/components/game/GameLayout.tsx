@@ -4,8 +4,12 @@ import GameWolfComponent from './GameWolfComponent'
 import GameCanvasComponent from './GameCanvasComponent'
 import GamePropertiesComponent from './GamePropertiesComponent'
 import './GameStyles.css'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../store'
 
 const GameLayout = () => {
+  const status = useSelector((state: RootState) => state.game.status)
+
   const [previousPosition, setPreviousPosition] = useState('Center')
 
   const [absValues, setAbsValues] = useState({
@@ -45,7 +49,11 @@ const GameLayout = () => {
         layoutHeight={absValues.height}
         layoutWidth={absValues.width}
       />
-      <GameCanvasComponent width={absValues.width} height={absValues.height} />
+      <GameCanvasComponent
+        width={absValues.width}
+        height={absValues.height}
+        isPaused={status !== 'ON'}
+      />
     </div>
   )
 }
