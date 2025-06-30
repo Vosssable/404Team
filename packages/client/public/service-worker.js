@@ -1,7 +1,7 @@
 /// <reference lib="webworker" />
 
 // Версия кеша (увеличивать при изменениях)
-const CACHE_NAME = '404team-cache-v1'
+const CACHE_NAME = '404team-cache-v2'
 // Список файлов для кеширования (добавлять новые при необходимости)
 const PRECACHE_URLS = [
   '/',
@@ -53,43 +53,21 @@ self.addEventListener('activate', event => {
 // Перехват fetch-запросов
 self.addEventListener('fetch', event => {
   event.respondWith(
-    // Пытаемся найти ответ на такой запрос в кеше
-    caches.match(event.request).then(response => {
-      // Если ответ найден, выдаём его
-      if (response) {
+    fetch(event.request)
+      .then(response => {
+        // Если ответ корректный — кладём в кеш
+        if (response && response.status === 200 && response.type === 'basic') {
+          const responseToCache = response.clone()
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, responseToCache)
+          })
+        }
         return response
-      }
-
-      const fetchRequest = event.request.clone()
-      // В противном случае делаем запрос на сервер
-      return (
-        fetch(fetchRequest)
-          // Можно задавать дополнительные параметры запроса, если ответ вернулся некорректный.
-          .then(response => {
-            // Если что-то пошло не так, выдаём в основной поток результат, но не кладём его в кеш
-            if (
-              !response ||
-              response.status !== 200 ||
-              response.type !== 'basic'
-            ) {
-              return response
-            }
-
-            const responseToCache = response.clone()
-            // Получаем доступ к кешу по CACHE_NAME
-            caches.open(CACHE_NAME).then(cache => {
-              // Записываем в кеш ответ, используя в качестве ключа запрос
-              cache.put(event.request, responseToCache)
-            })
-            // Отдаём в основной поток ответ
-            return response
-          })
-          .catch(error => {
-            console.error('fetch error', error)
-            return null
-          })
-      )
-    })
+      })
+      .catch(() => {
+        // Если сеть недоступна — пробуем из кеша
+        return caches.match(event.request)
+      })
   )
 })
 
