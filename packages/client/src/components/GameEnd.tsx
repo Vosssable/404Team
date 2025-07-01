@@ -10,9 +10,7 @@ type Props = {
 
 const GameEnd = ({ score = 120, onRestart }: Props) => {
   return (
-    <div
-      className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
-      style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)', zIndex: 9999 }}>
+    <div className="position-fixed overlay-backdrop top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center">
       <div className="card custom-card p-4 rounded text-center bg-transparent border text-light">
         <h2 className="mb-4">Игра окончена!</h2>
 

@@ -38,3 +38,8 @@ body:has(#wolf_game) {
   position: relative;
   z-index: 1;
 }
+
+.overlay-backdrop {
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+}
