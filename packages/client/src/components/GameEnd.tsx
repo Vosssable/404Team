@@ -1,15 +1,17 @@
 import { Link } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import './GameEndPage.css'
 import Button from './Button'
 import '../components/FormToFill.css'
 
-const GameEndPage = ({ score = 120 }) => {
+type Props = {
+  score?: number
+  onRestart: () => void
+}
+
+const GameEnd = ({ score = 120, onRestart }: Props) => {
   return (
-    <div
-      className="bg-overlay d-flex flex-column justify-content-center align-items-center min-vh-100 text-center"
-      style={{ backgroundImage: "url('/img/background.jpg')" }}>
-      <div className="card custom-card overlay-card p-5 rounded">
+    <div className="position-fixed overlay-backdrop top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center">
+      <div className="card custom-card p-4 rounded text-center bg-transparent border text-light">
         <h2 className="mb-4">Игра окончена!</h2>
 
         <img
@@ -23,15 +25,11 @@ const GameEndPage = ({ score = 120 }) => {
         <h1 className="display-4 mb-4">{score} очков</h1>
 
         <div className="d-flex gap-4 justify-content-center">
-          <Link to="/game">
-            <Button className="btn btn-success btn-lg button__bgc">
-              Повторить
-            </Button>
-          </Link>
+          <Button className="btn btn-success btn-lg" onClick={onRestart}>
+            Повторить
+          </Button>
           <Link to="/">
-            <Button className="btn btn-outline-light btn-lg button__bgc">
-              В меню
-            </Button>
+            <Button className="btn btn-outline-light btn-lg">В меню</Button>
           </Link>
         </div>
       </div>
@@ -39,4 +37,4 @@ const GameEndPage = ({ score = 120 }) => {
   )
 }
 
-export default GameEndPage
+export default GameEnd
