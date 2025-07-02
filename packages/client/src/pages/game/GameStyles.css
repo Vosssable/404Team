@@ -23,7 +23,7 @@
   position: absolute;
 }
 
-.wolf-left {
+.wolf-right {
   transform: scaleX(-1);
 }
 
