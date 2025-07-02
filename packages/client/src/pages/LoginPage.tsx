@@ -1,6 +1,9 @@
 import './RegisterPage.css'
 import FormToFill from '../components/FormToFill'
 import { FormConfig } from '../types/formConfig'
+import { useNavigate } from 'react-router-dom'
+import { useAppDispatch } from '../store/storeHooks'
+import { signInThunk } from '../store/thunks/authThunk'
 
 const loginFormConfig: FormConfig = {
   description: 'Вход',
@@ -14,9 +17,32 @@ const loginFormConfig: FormConfig = {
 }
 
 const LoginPage = () => {
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const form = e.currentTarget
+    const data = Object.fromEntries(new FormData(form)) as Record<
+      string,
+      string
+    >
+    try {
+      await dispatch(
+        signInThunk({
+          login: data.login,
+          password: data.password,
+        })
+      ).unwrap()
+      navigate('/')
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Ошибка авторизации')
+    }
+  }
+
   return (
     <div className="container-fluid bg__auth vw-100 vh-100 p-0 m-0 d-flex justify-content-center align-items-center">
-      <FormToFill {...loginFormConfig} />
+      <FormToFill {...loginFormConfig} onSubmit={handleSubmit} />
     </div>
   )
 }

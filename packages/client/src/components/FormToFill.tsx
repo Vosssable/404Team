@@ -1,11 +1,8 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
 import Button from './Button'
 import './FormToFill.css'
 import { Validation } from '../hooks/Validation'
 import { validationHook } from '../hooks/ValidationHook'
-import { useAppDispatch } from '../store/storeHooks'
-import { signInThunk, signUpThunk } from '../store/thunks/authThunk'
 
 type Props = {
   description: string
@@ -18,38 +15,11 @@ type Props = {
 
 function FormToFill(props: Props) {
   const { description, inputs, buttonText, href, linkText, onSubmit } = props
-  const dispatch = useAppDispatch()
-  const isRegistration = useLocation().pathname === '/register'
 
-  const defaultSubmit: React.FormEventHandler<HTMLFormElement> = async e => {
+  const defaultSubmit: React.FormEventHandler<HTMLFormElement> = e => {
     e.preventDefault()
-    const form = e.currentTarget
-    if (!validationHook(form)) return
-    const data = Object.fromEntries(new FormData(form)) as Record<
-      string,
-      string
-    >
-    try {
-      if (isRegistration) {
-        await dispatch(
-          signUpThunk({
-            first_name: data.first_name,
-            second_name: data.second_name,
-            login: data.login,
-            email: data.email,
-            password: data.password,
-            phone: data.phone,
-          })
-        ).unwrap()
-      } else {
-        await dispatch(
-          signInThunk({ login: data.login, password: data.password })
-        ).unwrap()
-      }
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : 'Неизвестная ошибка'
-      alert(msg)
-    }
+    if (!validationHook(e.currentTarget)) return
+    onSubmit?.(e)
   }
 
   return (

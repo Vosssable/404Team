@@ -6,6 +6,7 @@ import ProfilePage from '../pages/ProfilePage'
 import ForumPage from '../pages/forum/ForumPage'
 import NotFoundPage from '../pages/error-pages/NotFoundPage'
 import PrivateRoute from './PrivateRoute'
+import PublicRoute from './PublicRoute'
 import AuthLayout from './AuthLayout'
 import GamePage from '../pages/GamePage'
 import ForumTopicPage from '../pages/forum/ForumTopicPage'
@@ -14,52 +15,84 @@ import Leader from '../pages/LeaderBoard'
 
 export const router = createBrowserRouter([
   {
-    path: '/',
-    element: <HomePage />,
-  },
-  {
-    path: '/game',
-    element: <GamePage />,
-  },
-  {
     element: <AuthLayout />,
     children: [
       {
+        path: '/',
+        element: (
+          <PrivateRoute>
+            <HomePage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/game',
+        element: (
+          <PrivateRoute>
+            <GamePage />
+          </PrivateRoute>
+        ),
+      },
+      {
         path: 'login',
-        element: <LoginPage />,
+        element: (
+          <PublicRoute>
+            <LoginPage />
+          </PublicRoute>
+        ),
       },
       {
         path: 'register',
-        element: <RegisterPage />,
+        element: (
+          <PublicRoute>
+            <RegisterPage />
+          </PublicRoute>
+        ),
+      },
+      {
+        path: '/profile',
+        element: (
+          <PrivateRoute>
+            <ProfilePage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/forum',
+        element: (
+          <PrivateRoute>
+            <ForumPage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/forum/create',
+        element: (
+          <PrivateRoute>
+            <ForumCreateTopicPage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/forum/:topicId',
+        element: (
+          <PrivateRoute>
+            <ForumTopicPage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: 'leaders',
+        element: (
+          <PrivateRoute>
+            <Leader />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '*',
+        element: <NotFoundPage />,
       },
     ],
-  },
-  {
-    path: '/profile',
-    element: (
-      <PrivateRoute>
-        <ProfilePage />
-      </PrivateRoute>
-    ),
-  },
-  {
-    path: '/forum',
-    element: <ForumPage />,
-  },
-  {
-    path: '/forum/create',
-    element: <ForumCreateTopicPage />,
-  },
-  {
-    path: '/forum/:topicId',
-    element: <ForumTopicPage />,
-  },
-  {
-    path: '*',
-    element: <NotFoundPage />,
-  },
-  {
-    path: 'leaders',
-    element: <Leader />,
   },
 ])
