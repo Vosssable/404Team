@@ -51,27 +51,27 @@ function checkPosition(
 
 const positionState = {
   LEFT: {
-    imageUrl: '/game-wolf-moving.png',
+    imageUrl: 'images/game-wolf-moving.png',
     position: 'Left',
     className: 'left',
   },
   UPPERLEFT: {
-    imageUrl: '/game-wolf-moving.png',
+    imageUrl: 'images/game-wolf-moving.png',
     position: 'UpperLeft',
     className: 'left',
   },
   RIGHT: {
-    imageUrl: '/game-wolf-moving.png',
+    imageUrl: 'images/game-wolf-moving.png',
     position: 'Right',
     className: 'right',
   },
   UPPERRIGHT: {
-    imageUrl: '/game-wolf-moving.png',
+    imageUrl: 'images/game-wolf-moving.png',
     position: 'UpperRight',
     className: 'right',
   },
   CENTER: {
-    imageUrl: '/game-wolf-moving.png',
+    imageUrl: 'images/game-wolf-center.png',
     position: 'Center',
     className: 'center',
   },

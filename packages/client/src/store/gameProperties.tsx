@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { type TGameProperties } from '../components/game/GameInterfaces'
+import { type TGameProperties } from '../pages/game/GameInterfaces'
 
 const initialState: TGameProperties = {
   score: 0,

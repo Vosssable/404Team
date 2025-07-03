@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { TKeyDownResponseEx } from '../components/game/GameInterfaces'
+import { type TKeyDownResponseEx } from '../pages/game/GameInterfaces'
 
 const initialState: TKeyDownResponseEx = {
   position: 'Center',
   className: 'center',
-  imageUrl: '/game-wolf-center.png',
+  imageUrl: 'images/game-wolf-center.png',
 }
 
 const wolfPositionSlice = createSlice({
@@ -17,7 +17,7 @@ const wolfPositionSlice = createSlice({
     useDefaultPosition(state) {
       state.position = 'Center'
       state.className = 'center'
-      state.imageUrl = '/game-wolf-center.png'
+      state.imageUrl = 'images/game-wolf-center.png'
     },
   },
 })

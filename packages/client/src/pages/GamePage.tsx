@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import GameStart from '../components/GameStart'
-import GameLayout from '../components/game/GameLayout'
+import GameLayout from './game/GameLayout'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../store'
 import { endGame, startGame, resetGame } from '../store/gameSlice'
 import GameEnd from '../components/GameEnd'
 import { useDefaultProperties } from '../store/gameProperties'
+import { useDefaultPosition } from '../store/wolfPosition'
 
 const GamePage = () => {
   const dispatch = useDispatch()
@@ -19,6 +20,7 @@ const GamePage = () => {
   useEffect(() => {
     dispatch(resetGame())
     dispatch(useDefaultProperties())
+    dispatch(useDefaultPosition())
   }, [dispatch])
 
   useEffect(() => {
@@ -45,6 +47,7 @@ const GamePage = () => {
               onRestart={() => {
                 dispatch(resetGame())
                 dispatch(useDefaultProperties())
+                dispatch(useDefaultPosition())
                 setTimeout(() => {
                   dispatch(startGame())
                   setGameRestartKey(prev => prev + 1)
