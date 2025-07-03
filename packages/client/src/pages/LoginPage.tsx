@@ -3,7 +3,7 @@ import FormToFill from '../components/FormToFill'
 import { FormConfig } from '../types/formConfig'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../store/storeHooks'
-import { signInThunk } from '../store/thunks/authThunk'
+import { getUserThunk, signInThunk } from '../store/thunks/authThunk'
 
 const loginFormConfig: FormConfig = {
   description: 'Вход',
@@ -34,6 +34,7 @@ const LoginPage = () => {
           password: data.password,
         })
       ).unwrap()
+      await dispatch(getUserThunk())
       navigate('/')
     } catch (err) {
       alert(err instanceof Error ? err.message : 'Ошибка авторизации')
