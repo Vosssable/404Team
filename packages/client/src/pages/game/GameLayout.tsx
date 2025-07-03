@@ -5,8 +5,6 @@ import GameCanvasComponent from './GameCanvasComponent'
 import GamePropertiesComponent from './GamePropertiesComponent'
 import './GameStyles.css'
 import { useFullscreen } from '../../hooks/useFullscreen'
-
-let previousPosition = 'Center'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../store'
 
@@ -50,7 +48,7 @@ const GameLayout = () => {
       window.removeEventListener('keydown', onKeyDown)
       window.removeEventListener('resize', handleResize)
     }
-  }, [toggleFullscreen,previousPosition])
+  }, [toggleFullscreen, previousPosition])
 
   return (
     <div id="game_wolf_layout">
