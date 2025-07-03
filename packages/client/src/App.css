@@ -16,3 +16,30 @@ body:has(#wolf_game) {
   overflow: hidden;
   position: fixed;
 }
+
+.bg-overlay {
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.bg-overlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 0;
+}
+
+.overlay-card {
+  position: relative;
+  z-index: 1;
+}
+
+.overlay-backdrop {
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+}

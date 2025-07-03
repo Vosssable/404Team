@@ -1,69 +1,51 @@
-import { type TKeyDownResponse } from '../GameInterfaces'
+import type { TKeyDownResponseEx } from '../GameInterfaces'
+import { setPosition } from '../../../store/wolfPosition'
+import store from '../../../store'
 
-const onGameKeyDown = (
-  e: KeyboardEvent,
-  previous: string
-): TKeyDownResponse | undefined => {
-  switch (e.key.toLowerCase()) {
-    case 'arrowup':
-    case 'w':
-    case 'ц':
-      return checkPosition('Up', previous)
-    case 'arrowleft':
-    case 'a':
-    case 'ф':
-      return checkPosition('Left', previous)
-    case 'arrowright':
-    case 'd':
-    case 'в':
-      return checkPosition('Right', previous)
-    case 'arrowdown':
-    case 's':
-    case 'ы':
-      return checkPosition('Down', previous)
+const onGameKeyDown = (e: KeyboardEvent, previous: string) => {
+  switch (e.code) {
+    case 'ArrowUp':
+    case 'KeyW':
+      return changePosition(checkPosition('Up', previous))
+    case 'ArrowLeft':
+    case 'KeyA':
+      return changePosition(checkPosition('Left', previous))
+    case 'ArrowRight':
+    case 'KeyD':
+      return changePosition(checkPosition('Right', previous))
+    case 'ArrowDown':
+    case 'KeyS':
+      return changePosition(checkPosition('Down', previous))
+    // Задел на паузу
+    // case 'KeyP':
+    //   return 'PAUSE'
   }
 }
 
 function checkPosition(
   newPosKey: string,
   previousPos: string
-): TKeyDownResponse | undefined {
+): TKeyDownResponseEx | undefined {
   if (previousPos.includes(newPosKey)) return
 
   if (newPosKey === 'Center') return positionState.CENTER
 
   if (newPosKey === 'Up') {
-    if (previousPos === 'Left') {
-      return positionState.UPPERLEFT
-    } else if (previousPos === 'Right') {
-      return positionState.UPPERRIGHT
-    } else if (previousPos === 'Center') {
-      return positionState.RIGHT
-    }
+    if (previousPos === 'Left') return positionState.UPPERLEFT
+    if (previousPos === 'Right') return positionState.UPPERRIGHT
+    if (previousPos === 'Center') return positionState.RIGHT
   } else if (newPosKey === 'Down') {
-    if (previousPos === 'UpperLeft') {
-      return positionState.LEFT
-    } else if (previousPos === 'UpperRight') {
-      return positionState.RIGHT
-    } else if (previousPos === 'Center') {
-      return positionState.RIGHT
-    }
+    if (previousPos === 'UpperLeft') return positionState.LEFT
+    if (previousPos === 'UpperRight') return positionState.RIGHT
+    if (previousPos === 'Center') return positionState.RIGHT
   } else if (newPosKey === 'Left') {
-    if (previousPos === 'UpperRight') {
-      return positionState.UPPERLEFT
-    } else if (previousPos === 'Right') {
-      return positionState.LEFT
-    } else if (previousPos === 'Center') {
-      return positionState.LEFT
-    }
+    if (previousPos === 'UpperRight') return positionState.UPPERLEFT
+    if (previousPos === 'Right') return positionState.LEFT
+    if (previousPos === 'Center') return positionState.LEFT
   } else if (newPosKey === 'Right') {
-    if (previousPos === 'UpperLeft') {
-      return positionState.UPPERRIGHT
-    } else if (previousPos === 'Left') {
-      return positionState.RIGHT
-    } else if (previousPos === 'Center') {
-      return positionState.RIGHT
-    }
+    if (previousPos === 'UpperLeft') return positionState.UPPERRIGHT
+    if (previousPos === 'Left') return positionState.RIGHT
+    if (previousPos === 'Center') return positionState.RIGHT
   }
 }
 
@@ -94,5 +76,12 @@ const positionState = {
     className: 'center',
   },
 } as const
+
+const changePosition = (position: TKeyDownResponseEx | undefined) => {
+  if (!position) return
+  store.dispatch(setPosition(position))
+
+  return position.position
+}
 
 export default onGameKeyDown

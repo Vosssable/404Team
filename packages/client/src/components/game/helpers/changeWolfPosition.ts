@@ -1,7 +1,7 @@
-import { type TKeyDownResponse } from '../GameInterfaces'
+import { type TKeyDownResponseEx } from '../GameInterfaces'
 
 const changeWolfPosition = (
-  position: TKeyDownResponse,
+  position: TKeyDownResponseEx,
   width: number,
   height: number
 ): { top: number; left: number } => {
