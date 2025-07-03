@@ -30,3 +30,33 @@ export const signInThunk = createAsyncThunk<
   dispatch(setUser({ login: credentials.login }))
   return credentials.login
 })
+
+export const getUserThunk = createAsyncThunk<
+  void,
+  void,
+  { dispatch: AppDispatch; state: RootState }
+>('user/getUser', async (_, { dispatch }) => {
+  try {
+    const response = await fetch('https://ya-praktikum.tech/api/v2/auth/user', {
+      credentials: 'include',
+      mode: 'cors',
+    })
+    if (!response.ok) throw new Error()
+    const user = await response.json()
+    dispatch(setUser({ ...user, isAuthChecked: true }))
+  } catch {
+    dispatch(
+      setUser({
+        id: null,
+        first_name: '',
+        second_name: '',
+        login: '',
+        email: '',
+        phone: '',
+        avatar: null,
+        display_name: null,
+        isAuthChecked: true,
+      })
+    )
+  }
+})
