@@ -7,6 +7,8 @@ import {
   updateEggs,
 } from './helpers/linesAndEggs'
 import { type TEgg, type TLine } from './GameInterfaces'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../store'
 
 type TProps = {
   width: number
@@ -19,6 +21,30 @@ const GameCanvasComponent = ({ width, height, isPaused }: TProps) => {
   const animationRef = useRef<number>()
   const eggsRef = useRef<TEgg[]>([])
   const linesRef = useRef<TLine[]>([])
+  const status = useSelector((state: RootState) => state.game.status)
+
+  useEffect(() => {
+    const canvas = document.getElementById('canvas') as HTMLCanvasElement
+
+    if (!canvas) return
+
+    const handleLockChange = () => {
+      return true
+    }
+
+    const handleClick = () => {
+      document.addEventListener('pointerlockchange', handleLockChange)
+      canvas.requestPointerLock()
+    }
+
+    canvas.addEventListener('click', handleClick)
+
+    return () => {
+      canvas.removeEventListener('click', handleClick)
+      document.removeEventListener('pointerlockchange', handleLockChange)
+      document.exitPointerLock()
+    }
+  }, [status])
 
   useEffect(() => {
     if (isPaused) return
@@ -29,7 +55,6 @@ const GameCanvasComponent = ({ width, height, isPaused }: TProps) => {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    // Создаем линии
     linesRef.current = linesAndEggs(width, height)
 
     const animate = () => {
@@ -42,8 +67,6 @@ const GameCanvasComponent = ({ width, height, isPaused }: TProps) => {
       animationRef.current = requestAnimationFrame(animate)
     }
 
-    // Старт игры, пока для наглядности интервал 1000,
-    // затем сделаем увеличение по какому-нибудь принципу
     animate()
     const interval = setInterval(() => {
       createEgg(eggsRef, linesRef)
@@ -57,7 +80,7 @@ const GameCanvasComponent = ({ width, height, isPaused }: TProps) => {
     }
   }, [height, isPaused])
 
-  return <canvas ref={canvasRef} width={width} height={height} />
+  return <canvas id="canvas" ref={canvasRef} width={width} height={height} />
 }
 
 export default GameCanvasComponent
