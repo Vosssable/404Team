@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom'
+import type { RouteObject } from 'react-router-dom'
 import HomePage from '../pages/HomePage'
 import LoginPage from '../pages/LoginPage'
 import RegisterPage from '../pages/RegisterPage'
@@ -13,7 +13,7 @@ import ForumTopicPage from '../pages/forum/ForumTopicPage'
 import ForumCreateTopicPage from '../pages/forum/ForumCreateTopicPage'
 import Leader from '../pages/LeaderBoard'
 
-export const router = createBrowserRouter([
+export const router: RouteObject[] = [
   {
     element: <AuthLayout />,
     children: [
@@ -34,7 +34,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: 'login',
+        path: '/login',
         element: (
           <PublicRoute>
             <LoginPage />
@@ -42,7 +42,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: 'register',
+        path: '/register',
         element: (
           <PublicRoute>
             <RegisterPage />
@@ -82,7 +82,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: 'leaders',
+        path: '/leaders',
         element: (
           <PrivateRoute>
             <Leader />
@@ -95,4 +95,4 @@ export const router = createBrowserRouter([
       },
     ],
   },
-])
+]

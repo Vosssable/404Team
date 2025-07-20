@@ -2,7 +2,7 @@ import App from './App'
 import { render, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import store from './store'
-
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
 global.fetch = jest.fn(() =>
   Promise.resolve({
