@@ -2,7 +2,8 @@
   "compilerOptions": {
     "composite": true,
     "target": "es2019",
-    "module": "commonjs",
+    "module": "ESNext",
+    "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "lib": ["es2019", "DOM"],
