@@ -19,6 +19,7 @@ export default defineConfig({
   },
   define: {
     __SERVER_PORT__: JSON.stringify(process.env.SERVER_PORT),
+    __CLIENT_PORT__: JSON.stringify(process.env.CLIENT_PORT),
   },
   build: {
     outDir: path.join(__dirname, 'dist/client'),
