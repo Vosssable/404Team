@@ -18,5 +18,8 @@
   },
   "include": ["src"],
   "exclude": ["public/service-worker.js"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "references": [
+    { "path": "./tsconfig.node.json" },
+    { "path": "./tsconfig.server.json" }
+  ]
 }
