@@ -11,3 +11,4 @@ export function createStore(preloadedState?: any) {
 
 export type RootState = ReturnType<ReturnType<typeof createStore>['getState']>
 export type AppDispatch = ReturnType<ReturnType<typeof createStore>['dispatch']>
+export type AppStore = ReturnType<typeof createStore>
