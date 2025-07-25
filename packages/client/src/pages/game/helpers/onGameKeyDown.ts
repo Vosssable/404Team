@@ -1,8 +1,13 @@
 import type { TKeyDownResponseEx } from '../GameInterfaces'
 import { setPosition } from '../../../store/wolfPosition'
 import type { AppStore } from '../../../store'
+import type { Store } from '@reduxjs/toolkit'
 
-const onGameKeyDown = (e: KeyboardEvent, previous: string, store: AppStore) => {
+const onGameKeyDown = (
+  e: KeyboardEvent,
+  previous: string,
+  store: AppStore | Store
+) => {
   switch (e.code) {
     case 'ArrowUp':
     case 'KeyW':
@@ -79,7 +84,7 @@ const positionState = {
 
 const changePosition = (
   position: TKeyDownResponseEx | undefined,
-  store: AppStore
+  store: AppStore | Store
 ) => {
   if (!position) return
   store.dispatch(setPosition(position))

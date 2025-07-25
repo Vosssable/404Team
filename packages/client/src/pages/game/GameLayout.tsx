@@ -5,12 +5,13 @@ import GameCanvasComponent from './GameCanvasComponent'
 import GamePropertiesComponent from './GamePropertiesComponent'
 import './GameStyles.css'
 import { useFullscreen } from '../../hooks/useFullscreen'
-import { useSelector, useStore } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { RootState } from '../../store'
+import { useAppStore } from '../../store/storeHooks'
 
 const GameLayout = () => {
   const status = useSelector((state: RootState) => state.game.status)
-  const store = useStore()
+  const store = useAppStore()
 
   const [previousPosition, setPreviousPosition] = useState('Center')
 
