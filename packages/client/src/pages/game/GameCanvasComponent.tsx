@@ -9,6 +9,8 @@ import {
 import { type TEgg, type TLine } from './GameInterfaces'
 import { useSelector, useStore } from 'react-redux'
 import { RootState } from '../../store'
+import { useAppStore } from '../../store/storeHooks'
+import type { Store } from '@reduxjs/toolkit'
 
 type TProps = {
   width: number
@@ -22,7 +24,8 @@ const GameCanvasComponent = ({ width, height, isPaused }: TProps) => {
   const eggsRef = useRef<TEgg[]>([])
   const linesRef = useRef<TLine[]>([])
   const status = useSelector((state: RootState) => state.game.status)
-  const store = useStore()
+
+  const store = useAppStore()
 
   useEffect(() => {
     const canvas = document.getElementById('canvas') as HTMLCanvasElement
