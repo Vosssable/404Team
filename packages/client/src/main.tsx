@@ -5,7 +5,10 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
 import ErrorBoundary from './pages/error-pages/ErrorBoundary'
 import { Provider } from 'react-redux'
-import store from './store'
+import { createStore } from './store'
+
+const preloadedState = (window as any).__PRELOADED_STATE__ || {}
+const store = createStore(preloadedState)
 
 ReactDOM.hydrateRoot(
   document.getElementById('root') as HTMLElement,

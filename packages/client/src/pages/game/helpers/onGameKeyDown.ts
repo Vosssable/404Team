@@ -1,21 +1,26 @@
 import type { TKeyDownResponseEx } from '../GameInterfaces'
 import { setPosition } from '../../../store/wolfPosition'
-import store from '../../../store'
+import type { AppStore } from '../../../store'
+import type { Store } from '@reduxjs/toolkit'
 
-const onGameKeyDown = (e: KeyboardEvent, previous: string) => {
+const onGameKeyDown = (
+  e: KeyboardEvent,
+  previous: string,
+  store: AppStore | Store
+) => {
   switch (e.code) {
     case 'ArrowUp':
     case 'KeyW':
-      return changePosition(checkPosition('Up', previous))
+      return changePosition(checkPosition('Up', previous), store)
     case 'ArrowLeft':
     case 'KeyA':
-      return changePosition(checkPosition('Left', previous))
+      return changePosition(checkPosition('Left', previous), store)
     case 'ArrowRight':
     case 'KeyD':
-      return changePosition(checkPosition('Right', previous))
+      return changePosition(checkPosition('Right', previous), store)
     case 'ArrowDown':
     case 'KeyS':
-      return changePosition(checkPosition('Down', previous))
+      return changePosition(checkPosition('Down', previous), store)
     // Задел на паузу
     // case 'KeyP':
     //   return 'PAUSE'
@@ -77,7 +82,10 @@ const positionState = {
   },
 } as const
 
-const changePosition = (position: TKeyDownResponseEx | undefined) => {
+const changePosition = (
+  position: TKeyDownResponseEx | undefined,
+  store: AppStore | Store
+) => {
   if (!position) return
   store.dispatch(setPosition(position))
 
