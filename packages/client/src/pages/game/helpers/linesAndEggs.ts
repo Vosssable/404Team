@@ -1,6 +1,7 @@
 import { type TEgg, type TLine, type TPosition } from '../GameInterfaces'
 import React from 'react'
 import { setProperties } from '../../../store/gameProperties'
+import type { AppStore } from '../../../store'
 
 const linesAndEggs = (width: number, height: number) => {
   return [
@@ -74,7 +75,7 @@ const createEgg = (
 const updateEggs = (
   eggsRef: React.MutableRefObject<TEgg[]>,
   linesRef: React.MutableRefObject<TLine[]>,
-  store: any
+  store: AppStore
 ) => {
   const now = Date.now(),
     eggs = eggsRef.current,
@@ -130,7 +131,7 @@ const updateEggs = (
   }
 }
 
-function updateProperties(eggPosition: string, store: any) {
+function updateProperties(eggPosition: string, store: AppStore) {
   const storeState = store.getState(),
     life = storeState.gameProperties.life,
     score = storeState.gameProperties.score,
