@@ -37,7 +37,7 @@ async function createServer() {
 
     try {
       let template: string
-      let render: (url: string) => Promise<string>
+      let render: (url: string) => Promise<{ html: string; state: any }>
 
       if (vite) {
         template = await fs.readFile(
@@ -56,8 +56,13 @@ async function createServer() {
         ).render
       }
 
-      const appHtml = await render(url)
-      const html = template.replace(`<!--ssr-outlet-->`, appHtml)
+      const { html: appHtml, state } = await render(url)
+      const stateScript = `<script>window.__PRELOADED_STATE__ = ${JSON.stringify(
+        state
+      ).replace(/</g, '\u003c')}</script>`
+      const html = template
+        .replace('<!--ssr-outlet-->', appHtml)
+        .replace('</body>', `${stateScript}\n</body>`)
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (e) {

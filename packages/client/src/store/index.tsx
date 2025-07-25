@@ -1,12 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import rootReducer from './rootReducer'
 
-export const store = configureStore({
-  reducer: rootReducer,
-  devTools: process.env.NODE_ENV !== 'production', // для отладки
-})
+export function createStore(preloadedState?: any) {
+  return configureStore({
+    reducer: rootReducer,
+    preloadedState,
+    devTools: process.env.NODE_ENV !== 'production',
+  })
+}
 
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
-
-export default store
+export type RootState = ReturnType<ReturnType<typeof createStore>['getState']>
+export type AppDispatch = ReturnType<ReturnType<typeof createStore>['dispatch']>

@@ -5,11 +5,12 @@ import GameCanvasComponent from './GameCanvasComponent'
 import GamePropertiesComponent from './GamePropertiesComponent'
 import './GameStyles.css'
 import { useFullscreen } from '../../hooks/useFullscreen'
-import { useSelector } from 'react-redux'
+import { useSelector, useStore } from 'react-redux'
 import { RootState } from '../../store'
 
 const GameLayout = () => {
   const status = useSelector((state: RootState) => state.game.status)
+  const store = useStore()
 
   const [previousPosition, setPreviousPosition] = useState('Center')
 
@@ -36,7 +37,7 @@ const GameLayout = () => {
 
       e.preventDefault()
 
-      const newPosition = onGameKeyDown(e, previousPosition)
+      const newPosition = onGameKeyDown(e, previousPosition, store)
       if (!newPosition || previousPosition === newPosition) return
 
       setPreviousPosition(newPosition)

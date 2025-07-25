@@ -7,7 +7,7 @@ import {
   updateEggs,
 } from './helpers/linesAndEggs'
 import { type TEgg, type TLine } from './GameInterfaces'
-import { useSelector } from 'react-redux'
+import { useSelector, useStore } from 'react-redux'
 import { RootState } from '../../store'
 
 type TProps = {
@@ -22,6 +22,7 @@ const GameCanvasComponent = ({ width, height, isPaused }: TProps) => {
   const eggsRef = useRef<TEgg[]>([])
   const linesRef = useRef<TLine[]>([])
   const status = useSelector((state: RootState) => state.game.status)
+  const store = useStore()
 
   useEffect(() => {
     const canvas = document.getElementById('canvas') as HTMLCanvasElement
@@ -61,7 +62,7 @@ const GameCanvasComponent = ({ width, height, isPaused }: TProps) => {
       ctx.clearRect(0, 0, width, height)
 
       linesRef.current.forEach(line => drawLine(line, ctx))
-      updateEggs(eggsRef, linesRef)
+      updateEggs(eggsRef, linesRef, store)
       eggsRef.current.forEach(egg => drawEgg(egg, ctx))
 
       animationRef.current = requestAnimationFrame(animate)
