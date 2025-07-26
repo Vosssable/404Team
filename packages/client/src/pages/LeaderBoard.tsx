@@ -3,9 +3,8 @@ import { AgGridReact } from 'ag-grid-react'
 import { ModuleRegistry } from 'ag-grid-community'
 import { ClientSideRowModelModule } from 'ag-grid-community'
 import type { ColDef } from 'ag-grid-community'
-import { getLeaderboard } from '../api/leaderboard'
-
 import './LeaderBoard.css'
+import { getLeaderboard } from '../api/leaderboard'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
 
@@ -28,8 +27,6 @@ const Leader = () => {
       try {
         const response = await getLeaderboard(10, 0)
         const entries: LeaderboardEntry[] = response || []
-
-        console.log(entries)
 
         const formatted = entries.map(entry => {
           const seconds = Number(entry.data.time)
