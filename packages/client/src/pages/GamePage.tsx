@@ -7,6 +7,7 @@ import { endGame, startGame, resetGame } from '../store/gameSlice'
 import GameEnd from '../components/GameEnd'
 import { useDefaultProperties } from '../store/gameProperties'
 import { useDefaultPosition } from '../store/wolfPosition'
+import { useGameTimer } from '../hooks/useGameTimer'
 
 const GamePage = () => {
   const dispatch = useDispatch()
@@ -17,11 +18,7 @@ const GamePage = () => {
 
   const [gameRestartKey, setGameRestartKey] = useState(0)
 
-  useEffect(() => {
-    dispatch(resetGame())
-    dispatch(useDefaultProperties())
-    dispatch(useDefaultPosition())
-  }, [dispatch])
+  useGameTimer()
 
   useEffect(() => {
     if (status === 'ON' && life <= 0) {

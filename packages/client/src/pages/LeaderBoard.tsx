@@ -1,23 +1,59 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useEffect, useState } from 'react'
 import { AgGridReact } from 'ag-grid-react'
 import { ModuleRegistry } from 'ag-grid-community'
 import { ClientSideRowModelModule } from 'ag-grid-community'
 import type { ColDef } from 'ag-grid-community'
 import './LeaderBoard.css'
-
+import { getLeaderboard } from '../api/leaderboard'
 import 'ag-grid-community/styles/ag-grid.css'
 import 'ag-grid-community/styles/ag-theme-alpine.css'
 
 ModuleRegistry.registerModules([ClientSideRowModelModule])
 
+type LeaderboardEntry = {
+  data: {
+    user: string
+    score: number
+    time?: string
+  }
+}
+
 const Leader = () => {
-  const [rowData] = useState([
-    { id: 1, name: 'Игрок 1', score: 1500, time: '02:30' },
-    { id: 2, name: 'Игрок 2', score: 1200, time: '03:10' },
-    { id: 3, name: 'Игрок 3', score: 980, time: '04:05' },
-    { id: 4, name: 'Игрок 4', score: 850, time: '04:45' },
-    { id: 5, name: 'Игрок 5', score: 720, time: '05:20' },
-  ])
+  const [rowData, setRowData] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getLeaderboard(10, 0)
+        const entries = response
+
+        const formatted = entries.map(entry => {
+          const seconds = Number(entry.data.time)
+          const minutes = Math.floor(seconds / 60)
+          const remainingSeconds = Math.floor(seconds % 60)
+          const formattedTime = `${minutes}:${remainingSeconds
+            .toString()
+            .padStart(2, '0')}`
+
+          return {
+            name: entry.data.user,
+            score: entry.data.score,
+            time: isNaN(seconds) ? '—' : formattedTime,
+          }
+        })
+
+        setRowData(formatted)
+      } catch (err) {
+        setError('Не удалось загрузить таблицу лидеров. Попробуйте позже.')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
 
   const columnDefs = useMemo<ColDef[]>(
     () => [
@@ -70,20 +106,26 @@ const Leader = () => {
 
         <h1 className="title">ТАБЛИЦА ЛИДЕРОВ</h1>
 
-        <AgGridReact
-          rowData={rowData}
-          columnDefs={columnDefs}
-          defaultColDef={defaultColDef}
-          animateRows={true}
-          domLayout="autoHeight"
-          rowClass="row-class"
-          rowHeight={60}
-          headerHeight={50}
-          suppressHorizontalScroll={true}
-          onGridReady={params => {
-            params.api.sizeColumnsToFit()
-          }}
-        />
+        {loading && <p className="text-white text-center">Загрузка...</p>}
+
+        {error && <p className="text-danger text-center mt-3">{error}</p>}
+
+        {!loading && !error && (
+          <AgGridReact
+            rowData={rowData}
+            columnDefs={columnDefs}
+            defaultColDef={defaultColDef}
+            animateRows={true}
+            domLayout="autoHeight"
+            rowClass="row-class"
+            rowHeight={60}
+            headerHeight={50}
+            suppressHorizontalScroll={true}
+            onGridReady={params => {
+              params.api.sizeColumnsToFit()
+            }}
+          />
+        )}
 
         <div className="update-note">
           Обновлено: {new Date().toLocaleDateString()}
