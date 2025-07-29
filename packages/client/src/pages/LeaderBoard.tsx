@@ -21,6 +21,7 @@ type LeaderboardEntry = {
 const Leader = () => {
   const [rowData, setRowData] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,7 +46,7 @@ const Leader = () => {
 
         setRowData(formatted)
       } catch (err) {
-        console.error('Ошибка при получении лидерборда:', err)
+        setError('Не удалось загрузить таблицу лидеров. Попробуйте позже.')
       } finally {
         setLoading(false)
       }
@@ -105,9 +106,11 @@ const Leader = () => {
 
         <h1 className="title">ТАБЛИЦА ЛИДЕРОВ</h1>
 
-        {loading ? (
-          <p className="text-white text-center">Загрузка...</p>
-        ) : (
+        {loading && <p className="text-white text-center">Загрузка...</p>}
+
+        {error && <p className="text-danger text-center mt-3">{error}</p>}
+
+        {!loading && !error && (
           <AgGridReact
             rowData={rowData}
             columnDefs={columnDefs}
