@@ -1,7 +1,7 @@
 import { type TEgg, type TLine, type TPosition } from '../GameInterfaces'
 import React from 'react'
-import store from '../../../store'
 import { setProperties } from '../../../store/gameProperties'
+import type { Store } from '@reduxjs/toolkit'
 
 const linesAndEggs = (width: number, height: number) => {
   return [
@@ -74,7 +74,8 @@ const createEgg = (
 
 const updateEggs = (
   eggsRef: React.MutableRefObject<TEgg[]>,
-  linesRef: React.MutableRefObject<TLine[]>
+  linesRef: React.MutableRefObject<TLine[]>,
+  store: Store
 ) => {
   const now = Date.now(),
     eggs = eggsRef.current,
@@ -111,7 +112,7 @@ const updateEggs = (
           break
         case 6:
           eggs.splice(i, 1)
-          updateProperties(line.index)
+          updateProperties(line.index, store)
           break
       }
     }
@@ -130,7 +131,7 @@ const updateEggs = (
   }
 }
 
-function updateProperties(eggPosition: string) {
+function updateProperties(eggPosition: string, store: Store) {
   const storeState = store.getState(),
     life = storeState.gameProperties.life,
     score = storeState.gameProperties.score,
