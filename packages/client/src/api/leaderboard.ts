@@ -11,6 +11,14 @@ type LeaderboardData = {
   time?: string
 }
 
+type LeaderboardEntry = {
+  data: {
+    user: string
+    score: number
+    time?: string
+  }
+}
+
 export const sendResultToLeaderboard = async (data: LeaderboardData) => {
   return httpRequest(`${BASE_URL}`, {
     method: 'POST',
@@ -22,8 +30,11 @@ export const sendResultToLeaderboard = async (data: LeaderboardData) => {
   })
 }
 
-export const getLeaderboard = async (limit = 10, cursor = 0) => {
-  return httpRequest(`${BASE_URL}/${TEAM_NAME}`, {
+export const getLeaderboard = async (
+  limit = 10,
+  cursor = 0
+): Promise<LeaderboardEntry[]> => {
+  return httpRequest<LeaderboardEntry[]>(`${BASE_URL}/${TEAM_NAME}`, {
     method: 'POST',
     body: {
       ratingFieldName: RATING_FIELD,

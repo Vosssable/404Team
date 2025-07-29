@@ -27,7 +27,7 @@ const Leader = () => {
     const fetchData = async () => {
       try {
         const response = await getLeaderboard(10, 0)
-        const entries: LeaderboardEntry[] = response || []
+        const entries = response
 
         const formatted = entries.map(entry => {
           const seconds = Number(entry.data.time)
