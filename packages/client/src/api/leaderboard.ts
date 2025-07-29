@@ -1,4 +1,5 @@
 import { HOST_URL } from '../hooks/route'
+import { httpRequest } from './http'
 
 const BASE_URL = `${HOST_URL}/leaderboard`
 const RATING_FIELD = 'score'
@@ -11,33 +12,23 @@ type LeaderboardData = {
 }
 
 export const sendResultToLeaderboard = async (data: LeaderboardData) => {
-  return fetch(`${BASE_URL}`, {
+  return httpRequest(`${BASE_URL}`, {
     method: 'POST',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
+    body: {
       ratingFieldName: RATING_FIELD,
       teamName: TEAM_NAME,
       data,
-    }),
+    },
   })
 }
 
 export const getLeaderboard = async (limit = 10, cursor = 0) => {
-  const res = await fetch(`${BASE_URL}/${TEAM_NAME}`, {
+  return httpRequest(`${BASE_URL}/${TEAM_NAME}`, {
     method: 'POST',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
+    body: {
       ratingFieldName: RATING_FIELD,
       cursor,
       limit,
-    }),
+    },
   })
-
-  return res.json()
 }
