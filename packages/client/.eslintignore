@@ -1,2 +1,4 @@
 dev-dist/
 dist/
+node_modules/
+packages/server/dist/
