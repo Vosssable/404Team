@@ -2,7 +2,11 @@ import { useCallback } from 'react'
 
 export const useFullscreen = () => {
   const enterFullscreen = useCallback(() => {
-    const el = document.documentElement as any
+    const el = document.documentElement as HTMLElement & {
+      webkitRequestFullscreen?: () => void
+      mozRequestFullScreen?: () => void
+      msRequestFullscreen?: () => void
+    }
 
     if (el.requestFullscreen) {
       el.requestFullscreen()
@@ -16,7 +20,11 @@ export const useFullscreen = () => {
   }, [])
 
   const exitFullscreen = useCallback(() => {
-    const doc = document as any
+    const doc = document as Document & {
+      webkitExitFullscreen?: () => void
+      mozCancelFullScreen?: () => void
+      msExitFullscreen?: () => void
+    }
 
     if (doc.exitFullscreen) {
       doc.exitFullscreen()
