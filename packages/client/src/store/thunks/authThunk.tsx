@@ -5,6 +5,8 @@ import { registration } from '../../api/registration'
 import { authorization } from '../../api/authorization'
 import { initiateOAuth, completeOAuth } from '../../api/oauth'
 
+const oAuthRedirectUri = 'http://localhost:3000/oauth-callback'
+
 export const signUpThunk = createAsyncThunk<
   unknown,
   {
@@ -68,11 +70,9 @@ export const oauthYandexThunk = createAsyncThunk<
   { dispatch: AppDispatch; state: RootState }
 >('user/oauthYandex', async () => {
   try {
-    const redirectUri = `http://localhost:3000/`
-    const serviceId = await initiateOAuth(redirectUri)
-    console.log(serviceId)
+    const serviceId = await initiateOAuth(oAuthRedirectUri)
     const oauthUrl = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${serviceId}&redirect_uri=${encodeURIComponent(
-      redirectUri
+      oAuthRedirectUri
     )}`
     window.location.href = oauthUrl
   } catch (error) {
@@ -86,14 +86,23 @@ export const oauthCallbackThunk = createAsyncThunk<
   { dispatch: AppDispatch; state: RootState }
 >('user/oauthCallback', async ({ code }, { dispatch }) => {
   try {
-    const redirectUri = `http://localhost:3000/`
-    await completeOAuth(code, redirectUri)
+    await completeOAuth(code, oAuthRedirectUri)
+
+    // Добавляем небольшую задержку для установки куки
+    await new Promise(resolve => setTimeout(resolve, 100))
+
     // После успешной OAuth авторизации получаем данные пользователя
     const response = await fetch('https://ya-praktikum.tech/api/v2/auth/user', {
       credentials: 'include',
       mode: 'cors',
     })
-    if (!response.ok) throw new Error()
+
+    if (!response.ok) {
+      throw new Error(
+        `Ошибка получения данных пользователя: ${response.status}`
+      )
+    }
+
     const user = await response.json()
     dispatch(setUser({ ...user, isAuthChecked: true }))
   } catch (error) {

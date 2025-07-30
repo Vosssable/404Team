@@ -21,16 +21,16 @@ ReactDOM.hydrateRoot(
   </React.StrictMode>
 )
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker
-      .register('/service-worker.js')
-      .then(registration => {
-        // Можно добавить обработку обновлений воркера
-        console.log('Service Worker зарегистрирован:', registration)
-      })
-      .catch(error => {
-        console.error('Ошибка регистрации Service Worker:', error)
-      })
-  })
-}
+// if ('serviceWorker' in navigator) {
+//   window.addEventListener('load', () => {
+//     navigator.serviceWorker
+//       .register('/service-worker.js')
+//       .then(registration => {
+//         // Можно добавить обработку обновлений воркера
+//         console.log('Service Worker зарегистрирован:', registration)
+//       })
+//       .catch(error => {
+//         console.error('Ошибка регистрации Service Worker:', error)
+//       })
+//   })
+// }

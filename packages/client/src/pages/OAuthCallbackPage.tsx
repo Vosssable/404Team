@@ -8,31 +8,33 @@ const OAuthCallbackPage = () => {
   const [searchParams] = useSearchParams()
   const dispatch = useAppDispatch()
 
-  useEffect(() => {
-    const code = searchParams.get('code')
-    const state = searchParams.get('state')
+  const code = searchParams.get('code')
+  const state = searchParams.get('state')
 
+  useEffect(() => {
     if (!code) {
       alert('Ошибка: код авторизации не получен')
       navigate('/login')
       return
     }
 
-    const handleOAuthCallback = async () => {
-      try {
-        await dispatch(
-          oauthCallbackThunk({ code, state: state || undefined })
-        ).unwrap()
-        navigate('/')
-      } catch (error) {
-        alert(
-          error instanceof Error ? error.message : 'Ошибка OAuth авторизации'
-        )
-        navigate('/login')
+    if (code) {
+      const handleOAuthCallback = async () => {
+        try {
+          await dispatch(
+            oauthCallbackThunk({ code, state: state || undefined })
+          ).unwrap()
+          navigate('/')
+        } catch (error) {
+          alert(
+            error instanceof Error ? error.message : 'Ошибка OAuth авторизации'
+          )
+          navigate('/login')
+        }
       }
-    }
 
-    handleOAuthCallback()
+      handleOAuthCallback()
+    }
   }, [searchParams, dispatch, navigate])
 
   return (
