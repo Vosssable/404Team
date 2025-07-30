@@ -3,6 +3,7 @@ import Button from './Button'
 import './FormToFill.css'
 import { Validation } from '../hooks/Validation'
 import { validationHook } from '../hooks/ValidationHook'
+import { OAuthButton } from './oauth-button/OAuthButton'
 
 type Props = {
   description: string
@@ -11,10 +12,19 @@ type Props = {
   href?: string
   linkText?: string
   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void
+  showOAuth?: boolean
 }
 
 function FormToFill(props: Props) {
-  const { description, inputs, buttonText, href, linkText, onSubmit } = props
+  const {
+    description,
+    inputs,
+    buttonText,
+    href,
+    linkText,
+    onSubmit,
+    showOAuth,
+  } = props
 
   const defaultSubmit: React.FormEventHandler<HTMLFormElement> = e => {
     e.preventDefault()
@@ -47,6 +57,7 @@ function FormToFill(props: Props) {
             type="submit">
             {buttonText}
           </Button>
+          {showOAuth && <OAuthButton />}
           <div className="text-center m-1">
             <a className="tofill__link" href={href}>
               {linkText}
