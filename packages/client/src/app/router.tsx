@@ -12,6 +12,7 @@ import GamePage from '../pages/GamePage'
 import ForumTopicPage from '../pages/forum/ForumTopicPage'
 import ForumCreateTopicPage from '../pages/forum/ForumCreateTopicPage'
 import Leader from '../pages/LeaderBoard'
+import OAuthCallbackPage from '../pages/OAuthCallbackPage'
 
 export const router: RouteObject[] = [
   {
@@ -48,6 +49,10 @@ export const router: RouteObject[] = [
             <RegisterPage />
           </PublicRoute>
         ),
+      },
+      {
+        path: '/oauth-callback',
+        element: <OAuthCallbackPage />,
       },
       {
         path: '/profile',
