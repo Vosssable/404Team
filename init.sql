@@ -1,12 +1,18 @@
-drop database IF EXISTS emoji_db;
-
-create DATABASE emoji_db;
+create DATABASE wolf_db;
 
 create table Emojis(
   emoji_id SERIAL PRIMARY KEY,
   emoji CHAR(5) NOT NULL,
   emoji_name VARCHAR(100) NOT NULL
 );
+
+create table Users(
+  user_id SERIAL PRIMARY KEY,
+  user_name VARCHAR(50) NOT NULL UNIQUE,
+  dark_theme BOOLEAN DEFAULT FALSE
+);
+
+CREATE INDEX idx_users_user_name ON Users(LOWER(user_name));
 
 insert into Emojis(emoji, emoji_name) values
     ('😂', 'Лицо со слезами радости'),
