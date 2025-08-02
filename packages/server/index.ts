@@ -3,11 +3,13 @@ import cors from 'cors'
 import express from 'express'
 import { createClientAndConnect } from './db'
 import { Pool } from 'pg'
+import userAPI from './userAPI'
 
 dotenv.config({ path: '../../.env' })
 
 const app = express()
 app.use(cors())
+app.use(express.json())
 const port = Number(process.env.SERVER_PORT) || 3001
 
 const pool = new Pool({
@@ -35,14 +37,12 @@ app.get('/emojis', async (_, res) => {
 })
 
 app.get('/emojis/:id', async (req, res) => {
-  console.log(req.params)
   try {
     const { id } = req.params
     const { rows } = await pool.query(
       'SELECT * FROM emojis WHERE emoji_id = $1',
       [id]
     )
-    console.log(rows)
 
     if (rows.length === 0) {
       res.status(404).json({ error: 'Нет такого эмодзи' })
@@ -54,6 +54,8 @@ app.get('/emojis/:id', async (req, res) => {
     res.status(500).json({ error: 'Нет подключения к базе' })
   }
 })
+
+userAPI(app, pool)
 
 app.listen(port, () => {
   console.log(`  ➜ 🎸 Server is listening on port: ${port}`)
