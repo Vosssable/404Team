@@ -23,6 +23,7 @@ const GameWolfComponent = (props: TProps) => {
 
   return (
     <div
+      data-testid="wolf-component"
       className={`wolf-${position.className}`}
       style={{
         backgroundImage: `url(${position.imageUrl})`,
