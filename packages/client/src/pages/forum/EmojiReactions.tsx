@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { EmojiReaction, EmojiOption, AVAILABLE_EMOJIS } from './lib/forumTypes'
+import { EmojiReaction, AVAILABLE_EMOJIS } from './lib/forumTypes'
 import styles from './ForumPage.module.css'
 
 interface EmojiReactionsProps {
@@ -10,13 +10,13 @@ interface EmojiReactionsProps {
   className?: string
 }
 
-export const EmojiReactions: React.FC<EmojiReactionsProps> = ({
+export const EmojiReactions = ({
   reactions,
   currentUserId,
   onReactionAdd,
   onReactionRemove,
   className = '',
-}) => {
+}: EmojiReactionsProps) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
   const pickerRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)

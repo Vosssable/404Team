@@ -29,7 +29,7 @@ const ForumTopicPage = () => {
     addReaction: addTopicReaction,
     removeReaction: removeTopicReaction,
   } = useEmojiReactions({
-    topicId: topicId!,
+    topicId: topicId || '',
     currentUserId,
     initialReactions: topic?.reactions || [],
   })
@@ -37,7 +37,7 @@ const ForumTopicPage = () => {
   // Хук для управления эмодзи-реакциями комментариев
   const { addCommentReaction, removeCommentReaction } =
     useCommentEmojiReactions({
-      topicId: topicId!,
+      topicId: topicId || '',
       currentUserId,
       comments,
       onCommentsUpdate: setComments,

@@ -1,11 +1,9 @@
 import styles from './ForumPage.module.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { mockTopics } from './lib/mockForumData'
-import { EmojiReactions } from './EmojiReactions'
 
 const ForumPage = () => {
   const navigate = useNavigate()
-  const currentUserId = 'user2' // временно, потом брать из auth
 
   return (
     <div className={styles.forumRoot}>
