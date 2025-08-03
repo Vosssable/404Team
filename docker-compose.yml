@@ -24,10 +24,17 @@ services:
             args:
               SERVER_PORT: ${SERVER_PORT}
         restart: always
-        ports:
-            - "${SERVER_PORT}:${SERVER_PORT}"
+        expose:
+          - "${SERVER_PORT}"
         environment:
           SERVER_PORT: ${SERVER_PORT}
+          POSTGRES_USER: ${POSTGRES_USER}
+          POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+          POSTGRES_DB: ${POSTGRES_DB}
+          POSTGRES_PORT: ${POSTGRES_PORT}
+          POSTGRES_HOST: postgres
+        depends_on:
+          - postgres
 
     postgres:
       image: postgres:14     
@@ -39,4 +46,5 @@ services:
         POSTGRES_DB: ${POSTGRES_DB}
       volumes:
         - ./tmp/pgdata:/var/lib/postgresql/data
+        - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
