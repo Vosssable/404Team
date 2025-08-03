@@ -7,6 +7,20 @@ export const mockTopics: ForumTopic[] = [
     content: 'Обсуждение игры',
     author: 'User1',
     createdAt: '2024-06-01',
+    reactions: [
+      {
+        id: 'r1',
+        emoji: '👍',
+        count: 3,
+        users: ['user2', 'user3', 'user4'],
+      },
+      {
+        id: 'r2',
+        emoji: '❤️',
+        count: 2,
+        users: ['user2', 'user5'],
+      },
+    ],
   },
   {
     id: '2',
@@ -14,6 +28,14 @@ export const mockTopics: ForumTopic[] = [
     content: 'Задавайте вопросы!',
     author: 'User2',
     createdAt: '2024-06-02',
+    reactions: [
+      {
+        id: 'r3',
+        emoji: '😂',
+        count: 1,
+        users: ['user1'],
+      },
+    ],
   },
   {
     id: '3',
@@ -21,6 +43,20 @@ export const mockTopics: ForumTopic[] = [
     content: 'Делимся тактиками и советами.',
     author: 'User3',
     createdAt: '2024-06-03',
+    reactions: [
+      {
+        id: 'r4',
+        emoji: '👏',
+        count: 4,
+        users: ['user1', 'user2', 'user4', 'user6'],
+      },
+      {
+        id: 'r5',
+        emoji: '🔥',
+        count: 2,
+        users: ['user2', 'user5'],
+      },
+    ],
   },
   {
     id: '4',
@@ -42,6 +78,14 @@ export const mockTopics: ForumTopic[] = [
     content: 'Ждём новый патч!',
     author: 'User6',
     createdAt: '2024-06-06',
+    reactions: [
+      {
+        id: 'r6',
+        emoji: '🎉',
+        count: 5,
+        users: ['user1', 'user2', 'user3', 'user4', 'user5'],
+      },
+    ],
   },
   {
     id: '7',
@@ -81,6 +125,14 @@ export const mockComments: ForumComment[] = [
     author: 'User2',
     userId: 'user2',
     createdAt: '2024-06-01',
+    reactions: [
+      {
+        id: 'rc1',
+        emoji: '👍',
+        count: 2,
+        users: ['user1', 'user3'],
+      },
+    ],
   },
   {
     id: 'c2',
@@ -89,6 +141,14 @@ export const mockComments: ForumComment[] = [
     author: 'User3',
     userId: 'user3',
     createdAt: '2024-06-02',
+    reactions: [
+      {
+        id: 'rc2',
+        emoji: '😮',
+        count: 1,
+        users: ['user2'],
+      },
+    ],
   },
   {
     id: 'c3',
@@ -105,6 +165,14 @@ export const mockComments: ForumComment[] = [
     author: 'User2',
     userId: 'user2',
     createdAt: '2024-06-03',
+    reactions: [
+      {
+        id: 'rc3',
+        emoji: '💯',
+        count: 3,
+        users: ['user1', 'user3', 'user4'],
+      },
+    ],
   },
   {
     id: 'c5',
@@ -137,6 +205,14 @@ export const mockComments: ForumComment[] = [
     author: 'User7',
     userId: 'user7',
     createdAt: '2024-06-06',
+    reactions: [
+      {
+        id: 'rc4',
+        emoji: '🔥',
+        count: 2,
+        users: ['user2', 'user3'],
+      },
+    ],
   },
   {
     id: 'c9',

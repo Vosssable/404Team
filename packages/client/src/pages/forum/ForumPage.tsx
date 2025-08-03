@@ -1,9 +1,11 @@
 import styles from './ForumPage.module.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { mockTopics } from './lib/mockForumData'
+import { EmojiReactions } from './EmojiReactions'
 
 const ForumPage = () => {
   const navigate = useNavigate()
+  const currentUserId = 'user2' // временно, потом брать из auth
 
   return (
     <div className={styles.forumRoot}>
@@ -27,6 +29,17 @@ const ForumPage = () => {
                 </div>
                 <div className={styles.topicPreview}>{topic.content}</div>
               </Link>
+
+              {/* Эмодзи-реакции для топика в списке */}
+              {topic.reactions && topic.reactions.length > 0 && (
+                <div className={styles.topicReactionsPreview}>
+                  {topic.reactions.map(reaction => (
+                    <span key={reaction.id} className={styles.reactionPreview}>
+                      {reaction.emoji} {reaction.count}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
         </div>
