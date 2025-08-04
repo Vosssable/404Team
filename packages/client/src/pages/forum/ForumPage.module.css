@@ -243,3 +243,214 @@
   color: var(--forum-meta);
   text-align: right;
 }
+
+/* Стили для эмодзи-реакций */
+.emojiReactions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  position: relative;
+}
+
+.existingReactions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.emojiButton {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--alt-bg-formTofill);
+  border: 1px solid var(--color-border-formTofill);
+  border-radius: 16px;
+  padding: 4px 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px var(--forum-btn-shadow);
+  position: relative;
+}
+
+.emojiButton:hover {
+  background: var(--color-bg-formTofill);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px var(--forum-btn-shadow);
+}
+
+.emojiButton:active {
+  transform: translateY(0);
+}
+
+.emojiButton.userReacted {
+  background: #ffe4b3;
+  border-color: #ffb347;
+  color: #7a4a13;
+  box-shadow: 0 2px 6px rgba(255, 179, 71, 0.3);
+}
+
+.emojiButton.userReacted:hover {
+  background: #ffd280;
+  box-shadow: 0 3px 8px rgba(255, 179, 71, 0.4);
+}
+
+.emoji {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.emojiCount {
+  font-size: 12px;
+  font-weight: 600;
+  min-width: 16px;
+  text-align: center;
+}
+
+.addReactionButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: var(--alt-bg-formTofill);
+  border: 1px solid var(--color-border-formTofill);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px var(--forum-btn-shadow);
+  position: relative;
+}
+
+.addReactionButton:hover {
+  background: var(--color-bg-formTofill);
+  transform: scale(1.1);
+  box-shadow: 0 2px 6px var(--forum-btn-shadow);
+}
+
+.addReactionButton:active {
+  transform: scale(0.95);
+}
+
+.addReactionButton.active {
+  background: var(--color-bg-formTofill);
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px var(--forum-btn-shadow);
+}
+
+.addReactionIcon {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--color-text-formTofill);
+  transition: transform 0.2s ease;
+}
+
+.addReactionButton:hover .addReactionIcon {
+  transform: rotate(90deg);
+}
+
+.addReactionButton.active .addReactionIcon {
+  transform: rotate(45deg);
+}
+
+.userReactedIndicator {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: #4caf50;
+  color: white;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: bold;
+  border: 2px solid var(--alt-bg-formTofill);
+}
+
+.emojiPicker {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  background: var(--alt-bg-formTofill);
+  border: 1px solid var(--color-border-formTofill);
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  min-width: 280px;
+  margin-bottom: 8px;
+  animation: slideUp 0.2s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.emojiGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.emojiOption {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--alt-bg-formTofill);
+  border: 1px solid var(--color-border-formTofill);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 20px;
+}
+
+.emojiOption:hover {
+  background: var(--color-bg-formTofill);
+  transform: scale(1.1);
+  box-shadow: 0 2px 6px var(--forum-btn-shadow);
+}
+
+.emojiOption:active {
+  transform: scale(0.95);
+}
+
+/* Стили для предварительного просмотра реакций в списке топиков */
+.topicReactionsPreview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 4px 0;
+}
+
+.reactionPreview {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: var(--alt-bg-formTofill);
+  border: 1px solid var(--color-border-formTofill);
+  border-radius: 12px;
+  padding: 2px 6px;
+  font-size: 12px;
+  color: var(--color-text-formTofill);
+  box-shadow: 0 1px 2px var(--forum-btn-shadow);
+}
+
+.reactionPreview .emoji {
+  font-size: 14px;
+}
