@@ -27,6 +27,17 @@ const ForumPage = () => {
                 </div>
                 <div className={styles.topicPreview}>{topic.content}</div>
               </Link>
+
+              {/* Эмодзи-реакции для топика в списке */}
+              {topic.reactions && topic.reactions.length > 0 && (
+                <div className={styles.topicReactionsPreview}>
+                  {topic.reactions.map(reaction => (
+                    <span key={reaction.id} className={styles.reactionPreview}>
+                      {reaction.emoji} {reaction.count}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
         </div>
