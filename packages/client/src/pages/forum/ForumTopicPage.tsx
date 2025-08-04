@@ -4,6 +4,11 @@ import styles from './ForumPage.module.css'
 import { mockTopics, mockComments } from './lib/mockForumData'
 import { ForumComment } from './lib/forumTypes'
 import { AddCommentForm } from './AddCommentForm'
+import { EmojiReactions } from './EmojiReactions'
+import {
+  useEmojiReactions,
+  useCommentEmojiReactions,
+} from './lib/useEmojiReactions'
 
 const currentUserId = 'user2' // временно, потом брать из auth
 
@@ -18,6 +23,26 @@ const ForumTopicPage = () => {
 
   const isMyMessage = (userId: string) => userId === currentUserId
 
+  // Хук для управления эмодзи-реакциями топика
+  const {
+    reactions: topicReactions,
+    addReaction: addTopicReaction,
+    removeReaction: removeTopicReaction,
+  } = useEmojiReactions({
+    topicId: topicId || '',
+    currentUserId,
+    initialReactions: topic?.reactions || [],
+  })
+
+  // Хук для управления эмодзи-реакциями комментариев
+  const { addCommentReaction, removeCommentReaction } =
+    useCommentEmojiReactions({
+      topicId: topicId || '',
+      currentUserId,
+      comments,
+      onCommentsUpdate: setComments,
+    })
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!comment.trim() || !topic) return
@@ -30,6 +55,7 @@ const ForumTopicPage = () => {
         author: 'User2', // временно, потом брать из профиля
         userId: currentUserId,
         createdAt: new Date().toISOString().slice(0, 10),
+        reactions: [],
       },
     ])
     setComment('')
@@ -59,6 +85,14 @@ const ForumTopicPage = () => {
         </div>
         <div className={styles.topicContent}>{topic.content}</div>
 
+        {/* Эмодзи-реакции для топика */}
+        <EmojiReactions
+          reactions={topicReactions}
+          currentUserId={currentUserId}
+          onReactionAdd={addTopicReaction}
+          onReactionRemove={removeTopicReaction}
+        />
+
         <div className={styles.commentsTitle}>Чат</div>
         <div className={styles.chatContainer}>
           {comments.map(c => (
@@ -74,6 +108,14 @@ const ForumTopicPage = () => {
                 <span className={styles.commentDate}>{c.createdAt}</span>
               </div>
               <div className={styles.messageContent}>{c.content}</div>
+
+              {/* Эмодзи-реакции для комментария */}
+              <EmojiReactions
+                reactions={c.reactions || []}
+                currentUserId={currentUserId}
+                onReactionAdd={emoji => addCommentReaction(c.id, emoji)}
+                onReactionRemove={emoji => removeCommentReaction(c.id, emoji)}
+              />
             </div>
           ))}
         </div>
