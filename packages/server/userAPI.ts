@@ -1,63 +1,141 @@
 import type { Express } from 'express'
-import type { Pool } from 'pg'
+import { User } from './models/User'
+import { UserTheme } from './models/UserTheme'
+import { SiteTheme } from './models/SiteTheme'
 
-const userAPI = (app: Express, pool: Pool) => {
+const userAPI = (app: Express) => {
   app.get('/user/:username', async (req, res) => {
+    const { username } = req.params
+
     try {
-      const { username } = req.params
+      const user = await User.findOne({
+        where: { userName: username },
+        include: {
+          model: UserTheme,
+          include: [SiteTheme],
+        },
+      })
 
-      const { rows } = await pool.query(
-        'SELECT * FROM users WHERE user_name = $1',
-        [username]
-      )
-
-      if (rows.length === 0) {
-        res.status(404).json({ error: 'Нет такого пользователя' })
-        return
+      if (!user) {
+        return res.status(404).json({ error: 'Нет такого пользователя' })
       }
 
-      res.json(rows[0])
+      const userTheme = user.userThemes?.[0]
+      const theme = userTheme?.SiteTheme?.theme ?? 'light'
+
+      res.json({
+        id: user.id,
+        username: user.userName,
+        theme,
+      })
     } catch (err) {
-      res.status(500).json({ error: 'Нет подключения к базе' })
+      console.error(err)
+      res.status(500).json({ error: 'Ошибка сервера' })
     }
   })
 
   app.post('/user', async (req, res) => {
+    const { username, darkTheme } = req.body
+
+    if (!username) {
+      return res.status(400).json({ error: 'Нет поля username' })
+    }
+
     try {
-      const { username, darkTheme } = req.body
-
-      if (!username) {
-        res.status(400).json({ error: 'Нет поля username' })
-        return
+      const existing = await User.findOne({ where: { userName: username } })
+      if (existing) {
+        return res.status(400).json({ error: 'Пользователь уже существует' })
       }
-      const result = await pool.query(
-        'insert into users (user_name, dark_theme) values ($1, $2);',
-        [username, darkTheme]
-      )
 
-      res.status(201).json(!!result.rowCount)
+      const user = await User.create({ userName: username })
+
+      const defaultTheme = darkTheme ? 'dark' : 'light'
+      const theme = await SiteTheme.findOne({ where: { theme: defaultTheme } })
+
+      if (theme) {
+        await UserTheme.create({
+          ownerId: user.id,
+          themeId: theme.id,
+        })
+      }
+
+      res.status(201).json({ id: user.id, username: user.userName })
     } catch (err) {
-      res.status(500).json({ error: 'Нет подключения к базе' })
+      console.error(err)
+      res.status(500).json({ error: 'Ошибка сервера' })
     }
   })
 
   app.patch('/user/:username', async (req, res) => {
+    const { username } = req.params
+
     try {
-      const { username } = req.params
-      pool
-        .query(`SELECT * FROM Users WHERE user_name ILIKE '${username}'`)
-        .then(result => {
-          pool
-            .query(
-              `UPDATE Users SET dark_theme = ${!result.rows[0]
-                .dark_theme} WHERE user_name ILIKE '${username}'`
-            )
-            .then(() => {
-              res.status(201).json(result.rows[0])
-            })
-        })
+      const user = await User.findOne({ where: { userName: username } })
+      if (!user) {
+        return res.status(404).json({ error: 'Пользователь не найден' })
+      }
+
+      const userTheme = await UserTheme.findOne({ where: { ownerId: user.id } })
+      if (!userTheme) {
+        return res.status(404).json({ error: 'Тема не найдена' })
+      }
+
+      const currentTheme = await SiteTheme.findByPk(userTheme.themeId)
+      const newThemeName = currentTheme?.theme === 'dark' ? 'light' : 'dark'
+
+      const newTheme = await SiteTheme.findOne({
+        where: { theme: newThemeName },
+      })
+      if (!newTheme) {
+        return res.status(404).json({ error: 'Новая тема не найдена' })
+      }
+
+      userTheme.themeId = newTheme.id
+      await userTheme.save()
+
+      res
+        .status(200)
+        .json({ message: 'Тема переключена', theme: newTheme.theme })
     } catch (err) {
-      res.status(500).json({ error: 'Нет подключения к базе' })
+      console.error(err)
+      res.status(500).json({ error: 'Ошибка сервера' })
+    }
+  })
+
+  app.get('/user/:username/theme', async (req, res) => {
+    const { username } = req.params
+
+    try {
+      const user = await User.findOne({
+        where: { userName: username },
+        include: {
+          model: UserTheme,
+          include: [SiteTheme],
+          limit: 1,
+          order: [['id', 'DESC']],
+        },
+      })
+
+      if (!user || !user.userThemes?.length) {
+        return res.status(404).json({ error: 'Тема не найдена' })
+      }
+
+      const theme = user.userThemes[0].SiteTheme?.theme ?? 'light'
+
+      res.json({ theme })
+    } catch (err) {
+      console.error(err)
+      res.status(500).json({ error: 'Ошибка сервера' })
+    }
+  })
+
+  app.get('/themes', async (_, res) => {
+    try {
+      const themes = await SiteTheme.findAll()
+      res.json(themes)
+    } catch (err) {
+      console.error(err)
+      res.status(500).json({ error: 'Ошибка при получении тем' })
     }
   })
 }
