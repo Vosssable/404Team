@@ -7,12 +7,21 @@ import {
   AutoIncrement,
   AllowNull,
   Unique,
-  Index,
   HasMany,
 } from 'sequelize-typescript'
 import { UserTheme } from './user-theme.model'
 
-@Table({ tableName: 'users', timestamps: false })
+@Table({
+  tableName: 'users',
+  timestamps: false,
+  indexes: [
+    {
+      name: 'idx_users_user_name',
+      using: 'BTREE',
+      fields: ['user_name'],
+    },
+  ],
+})
 export class User extends Model {
   @AutoIncrement
   @PrimaryKey
@@ -21,7 +30,6 @@ export class User extends Model {
 
   @AllowNull(false)
   @Unique
-  @Index({ name: 'idx_users_user_name', using: 'btree' })
   @Column({ type: DataType.STRING, field: 'user_name' })
   userName!: string
 
