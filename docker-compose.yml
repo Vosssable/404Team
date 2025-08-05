@@ -24,8 +24,8 @@ services:
             args:
               SERVER_PORT: ${SERVER_PORT}
         restart: always
-        expose:
-          - "${SERVER_PORT}"
+        ports:
+          - "${SERVER_PORT}:${SERVER_PORT}"
         environment:
           SERVER_PORT: ${SERVER_PORT}
           POSTGRES_USER: ${POSTGRES_USER}
