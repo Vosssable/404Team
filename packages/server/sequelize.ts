@@ -1,4 +1,3 @@
-// server/sequelize.ts
 import { Sequelize } from 'sequelize-typescript'
 import { User } from './models/user.model'
 import { SiteTheme } from './models/site-theme.model'
