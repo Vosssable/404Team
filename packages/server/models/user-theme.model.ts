@@ -9,8 +9,8 @@ import {
   AllowNull,
   BelongsTo,
 } from 'sequelize-typescript'
-import { User } from './User'
-import { SiteTheme } from './SiteTheme'
+import { User } from './user.model'
+import { SiteTheme } from './site-theme.model'
 
 @Table({ tableName: 'user_theme', timestamps: false })
 export class UserTheme extends Model {
@@ -33,5 +33,8 @@ export class UserTheme extends Model {
   device?: string
 
   @BelongsTo(() => SiteTheme)
-  SiteTheme!: SiteTheme
+  siteTheme!: SiteTheme
+
+  @BelongsTo(() => User, { foreignKey: 'ownerId' })
+  owner!: User
 }

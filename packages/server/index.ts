@@ -3,7 +3,7 @@ import cors from 'cors'
 import express from 'express'
 import { sequelize } from './sequelize'
 import userAPI from './userAPI'
-import { Emoji } from './models/Emoji'
+import { Emoji } from './models/emoji.model'
 
 dotenv.config({ path: '../../.env' })
 
@@ -36,10 +36,10 @@ app.get('/emojis/:id', async (req, res) => {
       return res.status(404).json({ error: 'Нет такого эмодзи' })
     }
 
-    res.json(emoji)
+    return res.json(emoji)
   } catch (err) {
     console.error(err)
-    res.status(500).json({ error: 'Ошибка при подключении к БД' })
+    return res.status(500).json({ error: 'Ошибка при подключении к БД' })
   }
 })
 

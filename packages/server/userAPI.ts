@@ -1,7 +1,7 @@
 import type { Express } from 'express'
-import { User } from './models/User'
-import { UserTheme } from './models/UserTheme'
-import { SiteTheme } from './models/SiteTheme'
+import { User } from './models/user.model'
+import { UserTheme } from './models/user-theme.model'
+import { SiteTheme } from './models/site-theme.model'
 
 const userAPI = (app: Express) => {
   app.get('/user/:username', async (req, res) => {
@@ -21,16 +21,16 @@ const userAPI = (app: Express) => {
       }
 
       const userTheme = user.userThemes?.[0]
-      const theme = userTheme?.SiteTheme?.theme ?? 'light'
+      const theme = userTheme?.siteTheme?.theme ?? 'light'
 
-      res.json({
+      return res.json({
         id: user.id,
         username: user.userName,
         theme,
       })
     } catch (err) {
       console.error(err)
-      res.status(500).json({ error: 'Ошибка сервера' })
+      return res.status(500).json({ error: 'Ошибка сервера' })
     }
   })
 
@@ -59,10 +59,10 @@ const userAPI = (app: Express) => {
         })
       }
 
-      res.status(201).json({ id: user.id, username: user.userName })
+      return res.status(201).json({ id: user.id, username: user.userName })
     } catch (err) {
       console.error(err)
-      res.status(500).json({ error: 'Ошибка сервера' })
+      return res.status(500).json({ error: 'Ошибка сервера' })
     }
   })
 
@@ -93,12 +93,12 @@ const userAPI = (app: Express) => {
       userTheme.themeId = newTheme.id
       await userTheme.save()
 
-      res
+      return res
         .status(200)
         .json({ message: 'Тема переключена', theme: newTheme.theme })
     } catch (err) {
       console.error(err)
-      res.status(500).json({ error: 'Ошибка сервера' })
+      return res.status(500).json({ error: 'Ошибка сервера' })
     }
   })
 
@@ -120,22 +120,22 @@ const userAPI = (app: Express) => {
         return res.status(404).json({ error: 'Тема не найдена' })
       }
 
-      const theme = user.userThemes[0].SiteTheme?.theme ?? 'light'
+      const theme = user.userThemes[0].siteTheme?.theme ?? 'light'
 
-      res.json({ theme })
+      return res.json({ theme })
     } catch (err) {
       console.error(err)
-      res.status(500).json({ error: 'Ошибка сервера' })
+      return res.status(500).json({ error: 'Ошибка сервера' })
     }
   })
 
   app.get('/themes', async (_, res) => {
     try {
       const themes = await SiteTheme.findAll()
-      res.json(themes)
+      return res.json(themes)
     } catch (err) {
       console.error(err)
-      res.status(500).json({ error: 'Ошибка при получении тем' })
+      return res.status(500).json({ error: 'Ошибка при получении тем' })
     }
   })
 }

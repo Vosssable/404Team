@@ -10,7 +10,7 @@ import {
   Index,
   HasMany,
 } from 'sequelize-typescript'
-import { UserTheme } from './UserTheme'
+import { UserTheme } from './user-theme.model'
 
 @Table({ tableName: 'users', timestamps: false })
 export class User extends Model {
