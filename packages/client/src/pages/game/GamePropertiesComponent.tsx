@@ -8,7 +8,7 @@ const GamePropertiesComponent = () => {
   )
 
   return (
-    <div className={'game-header'}>
+    <div className={'game-header'} data-testid="game-properties">
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <span style={{ color: 'white', marginRight: '10px' }}>Жизни:</span>
         {Array.from({ length: life }).map((_, i) => (

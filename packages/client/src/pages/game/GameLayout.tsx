@@ -7,9 +7,11 @@ import './GameStyles.css'
 import { useFullscreen } from '../../hooks/useFullscreen'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../store'
+import { useAppStore } from '../../store/storeHooks'
 
 const GameLayout = () => {
   const status = useSelector((state: RootState) => state.game.status)
+  const store = useAppStore()
 
   const [previousPosition, setPreviousPosition] = useState('Center')
 
@@ -36,7 +38,7 @@ const GameLayout = () => {
 
       e.preventDefault()
 
-      const newPosition = onGameKeyDown(e, previousPosition)
+      const newPosition = onGameKeyDown(e, previousPosition, store)
       if (!newPosition || previousPosition === newPosition) return
 
       setPreviousPosition(newPosition)
