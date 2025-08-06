@@ -39,4 +39,21 @@ insert into Emojis(emoji, emoji_name) values
     ('📎', 'Скрепка'),
     ('✏️', 'Карандаш');
 
+CREATE TABLE SiteTheme (
+  id SERIAL PRIMARY KEY,
+  theme VARCHAR(50) NOT NULL UNIQUE,
+  description TEXT NOT NULL
+);
 
+CREATE INDEX idx_site_theme_theme ON SiteTheme(theme);
+
+CREATE TABLE UserTheme (
+  id SERIAL PRIMARY KEY,
+  theme_id INTEGER NOT NULL REFERENCES SiteTheme(id) ON DELETE CASCADE,
+  owner_id INTEGER NOT NULL REFERENCES Users(user_id) ON DELETE CASCADE,
+  device VARCHAR(50)
+);
+
+INSERT INTO SiteTheme(theme, description) VALUES
+  ('light', 'Светлая тема'),
+  ('dark', 'Тёмная тема');

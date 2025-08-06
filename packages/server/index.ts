@@ -1,26 +1,17 @@
 import dotenv from 'dotenv'
 import cors from 'cors'
 import express from 'express'
-import { createClientAndConnect } from './db'
-import { Pool } from 'pg'
+import { sequelize } from './sequelize'
 import userAPI from './userAPI'
+import { Emoji } from './models/emoji.model'
 
 dotenv.config({ path: '../../.env' })
 
 const app = express()
 app.use(cors())
 app.use(express.json())
+
 const port = Number(process.env.SERVER_PORT) || 3001
-
-const pool = new Pool({
-  user: process.env.POSTGRES_USER,
-  host: process.env.POSTGRES_HOST,
-  database: process.env.POSTGRES_DB,
-  password: process.env.POSTGRES_PASSWORD,
-  port: Number(process.env.POSTGRES_PORT),
-})
-
-createClientAndConnect()
 
 app.get('/', (_, res) => {
   res.json('👋 Howdy from the server :)')
@@ -28,35 +19,34 @@ app.get('/', (_, res) => {
 
 app.get('/emojis', async (_, res) => {
   try {
-    await pool.query('SELECT NOW()')
-    const { rows } = await pool.query('SELECT * FROM emojis')
-    res.json(rows)
+    const emojis = await Emoji.findAll()
+    res.json(emojis)
   } catch (err) {
-    res.status(500).json({ error: 'Нет подключения к базе' })
+    console.error(err)
+    res.status(500).json({ error: 'Ошибка при получении эмодзи' })
   }
 })
 
 app.get('/emojis/:id', async (req, res) => {
   try {
     const { id } = req.params
-    const { rows } = await pool.query(
-      'SELECT * FROM emojis WHERE emoji_id = $1',
-      [id]
-    )
+    const emoji = await Emoji.findByPk(Number(id))
 
-    if (rows.length === 0) {
-      res.status(404).json({ error: 'Нет такого эмодзи' })
-      return
+    if (!emoji) {
+      return res.status(404).json({ error: 'Нет такого эмодзи' })
     }
 
-    res.json(rows[0])
+    return res.json(emoji)
   } catch (err) {
-    res.status(500).json({ error: 'Нет подключения к базе' })
+    console.error(err)
+    return res.status(500).json({ error: 'Ошибка при подключении к БД' })
   }
 })
 
-userAPI(app, pool)
+userAPI(app)
 
-app.listen(port, () => {
-  console.log(`  ➜ 🎸 Server is listening on port: ${port}`)
+sequelize.sync().then(() => {
+  app.listen(port, () => {
+    console.log(`  ➜ 🎸 Server is listening on port: ${port}`)
+  })
 })
