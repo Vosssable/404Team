@@ -15,36 +15,36 @@ export const getLocationInfo = (): Promise<LocationInfo> => {
     }
 
     navigator.geolocation.getCurrentPosition(
-      async position => {
-        try {
-          const { latitude, longitude } = position.coords
+      position => {
+        const { latitude, longitude } = position.coords
 
-          // Получаем информацию о местоположении через reverse geocoding
-          const response = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10&accept-language=ru`
-          )
-
-          if (!response.ok) {
-            throw new Error('Не удалось получить информацию о местоположении')
-          }
-
-          const data = await response.json()
-
-          resolve({
-            country: data.address.country || 'Неизвестно',
-            city:
-              data.address.city ||
-              data.address.town ||
-              data.address.village ||
-              'Неизвестно',
+        // Получаем информацию о местоположении через reverse geocoding
+        fetch(
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10&accept-language=ru`
+        )
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Не удалось получить информацию о местоположении')
+            }
+            return response.json()
           })
-        } catch (error) {
-          // Если не удалось получить через API, используем заглушку
-          resolve({
-            country: 'Россия',
-            city: 'Ваш город',
+          .then(data => {
+            resolve({
+              country: data.address.country || 'Неизвестно',
+              city:
+                data.address.city ||
+                data.address.town ||
+                data.address.village ||
+                'Неизвестно',
+            })
           })
-        }
+          .catch(() => {
+            // Если не удалось получить через API, используем заглушку
+            resolve({
+              country: 'Россия',
+              city: 'Ваш город',
+            })
+          })
       },
       error => {
         let errorMessage = 'Не удалось получить местоположение'
