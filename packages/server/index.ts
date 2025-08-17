@@ -4,10 +4,19 @@ import express from 'express'
 import { sequelize } from './sequelize'
 import userAPI from './userAPI'
 import { Emoji } from './models/emoji.model'
+import {
+  xssProtectionMiddleware,
+  securityHeadersMiddleware,
+} from './middleware/xssProtection'
 
 dotenv.config({ path: '../../.env' })
 
 const app = express()
+
+// Применяем middleware для защиты от XSS
+app.use(securityHeadersMiddleware)
+app.use(xssProtectionMiddleware)
+
 app.use(cors())
 app.use(express.json())
 
