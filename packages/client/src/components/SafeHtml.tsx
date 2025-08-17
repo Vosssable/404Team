@@ -3,7 +3,6 @@ import { safeDisplay } from '../utils/xssProtection'
 
 interface SafeHtmlProps {
   content: string
-  allowHtml?: boolean
   className?: string
   tag?: keyof JSX.IntrinsicElements
 }
@@ -14,20 +13,10 @@ interface SafeHtmlProps {
  */
 export const SafeHtml: React.FC<SafeHtmlProps> = ({
   content,
-  allowHtml = false,
   className,
   tag: Tag = 'div',
 }) => {
-  const safeContent = safeDisplay(content, allowHtml)
-
-  if (allowHtml) {
-    return (
-      <Tag
-        className={className}
-        dangerouslySetInnerHTML={{ __html: safeContent }}
-      />
-    )
-  }
+  const safeContent = safeDisplay(content)
 
   return <Tag className={className}>{safeContent}</Tag>
 }

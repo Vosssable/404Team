@@ -160,43 +160,6 @@ const userAPI = (app: Express) => {
       return res.status(500).json({ error: 'Ошибка сервера' })
     }
   })
-
-  app.get('/user/:username/theme', async (req, res) => {
-    const { username } = req.params
-
-    try {
-      const user = await User.findOne({
-        where: { userName: username },
-        include: {
-          model: UserTheme,
-          include: [SiteTheme],
-          limit: 1,
-          order: [['id', 'DESC']],
-        },
-      })
-
-      if (!user || !user.userThemes?.length) {
-        return res.status(404).json({ error: 'Тема не найдена' })
-      }
-
-      const theme = user.userThemes[0].siteTheme?.theme ?? 'light'
-
-      return res.json({ theme })
-    } catch (err) {
-      console.error(err)
-      return res.status(500).json({ error: 'Ошибка сервера' })
-    }
-  })
-
-  app.get('/themes', async (_, res) => {
-    try {
-      const themes = await SiteTheme.findAll()
-      return res.json(themes)
-    } catch (err) {
-      console.error(err)
-      return res.status(500).json({ error: 'Ошибка при получении тем' })
-    }
-  })
 }
 
 export default userAPI
