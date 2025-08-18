@@ -4,6 +4,7 @@ import { getUserThunk } from '../store/thunks/authThunk'
 import Button from '../components/Button'
 import axios from '../axios'
 import '../components/FormToFill.css'
+import { validateInput } from '../utils/xssProtection'
 
 const ProfilePage = () => {
   const dispatch = useAppDispatch()
@@ -36,7 +37,13 @@ const ProfilePage = () => {
   }, [user])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value })
+    const { name, value } = e.target
+
+    // Применяем защиту от XSS при вводе
+    const validated = validateInput(value, 100)
+    if (validated !== null) {
+      setForm({ ...form, [name]: validated })
+    }
   }
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,9 +60,23 @@ const ProfilePage = () => {
 
   const updateUserProfile = async () => {
     try {
+      // Валидируем все поля перед отправкой
+      const validatedForm: Record<string, string> = {}
+
+      for (const [key, value] of Object.entries(form)) {
+        if (value) {
+          const validated = validateInput(value, 100)
+          if (validated !== null) {
+            validatedForm[key] = validated
+          }
+        }
+      }
+
       const payload = {
-        ...form,
-        ...(form.newPassword ? { new_password: form.newPassword } : {}),
+        ...validatedForm,
+        ...(validatedForm.newPassword
+          ? { new_password: validatedForm.newPassword }
+          : {}),
       }
 
       await axios.put('/user/profile', payload)

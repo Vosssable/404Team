@@ -9,6 +9,8 @@ import {
   useEmojiReactions,
   useCommentEmojiReactions,
 } from './lib/useEmojiReactions'
+import { validateInput } from '../../utils/xssProtection'
+import SafeHtml from '../../components/SafeHtml'
 
 const currentUserId = 'user2' // временно, потом брать из auth
 
@@ -46,12 +48,17 @@ const ForumTopicPage = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!comment.trim() || !topic) return
+
+    // Валидируем комментарий перед добавлением
+    const validatedComment = validateInput(comment, 5000)
+    if (!validatedComment) return
+
     setComments([
       ...comments,
       {
         id: String(Date.now()),
         topicId: topic.id,
-        content: comment,
+        content: validatedComment,
         author: 'User2', // временно, потом брать из профиля
         userId: currentUserId,
         createdAt: new Date().toISOString().slice(0, 10),
@@ -79,11 +86,20 @@ const ForumTopicPage = () => {
   return (
     <div className={styles.forumRoot}>
       <div className={styles.forumModal}>
-        <div className={styles.topicTitle}>{topic.title}</div>
+        <SafeHtml
+          content={topic.title}
+          className={styles.topicTitle}
+          allowHtml={false}
+        />
         <div className={styles.topicMeta}>
-          {topic.author} | {topic.createdAt}
+          <SafeHtml content={topic.author} /> |{' '}
+          <SafeHtml content={topic.createdAt} />
         </div>
-        <div className={styles.topicContent}>{topic.content}</div>
+        <SafeHtml
+          content={topic.content}
+          className={styles.topicContent}
+          allowHtml={false}
+        />
 
         {/* Эмодзи-реакции для топика */}
         <EmojiReactions
@@ -103,11 +119,19 @@ const ForumTopicPage = () => {
               }>
               <div className={styles.messageHeader}>
                 {!isMyMessage(c.userId) && (
-                  <span className={styles.commentAuthor}>{c.author}</span>
+                  <span className={styles.commentAuthor}>
+                    <SafeHtml content={c.author} />
+                  </span>
                 )}
-                <span className={styles.commentDate}>{c.createdAt}</span>
+                <span className={styles.commentDate}>
+                  <SafeHtml content={c.createdAt} />
+                </span>
               </div>
-              <div className={styles.messageContent}>{c.content}</div>
+              <SafeHtml
+                content={c.content}
+                className={styles.messageContent}
+                allowHtml={false}
+              />
 
               {/* Эмодзи-реакции для комментария */}
               <EmojiReactions
