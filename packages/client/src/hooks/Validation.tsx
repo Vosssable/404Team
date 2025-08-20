@@ -1,3 +1,5 @@
+import { validateInput } from '../utils/xssProtection'
+
 export class Validation {
   private static patterns: Record<string, RegExp> = {
     first_name: /^[A-Za-zА-Яа-яёЁ-]{2,20}$/,
@@ -44,10 +46,18 @@ export class Validation {
 
   public static validate(field: HTMLInputElement): boolean {
     const { name, value } = field
+
+    // Сначала применяем защиту от XSS
+    const sanitizedValue = validateInput(value, 1000)
+    if (sanitizedValue === null) {
+      this.setError(field, 'Обнаружен небезопасный ввод')
+      return false
+    }
+
     const pattern = this.patterns[name]
     if (!pattern) return true
 
-    const isValid = pattern.test(value.trim())
+    const isValid = pattern.test(sanitizedValue.trim())
 
     this.setError(field, isValid ? null : this.errorMessages[name])
     return isValid

@@ -1,6 +1,7 @@
 import dotenv from 'dotenv'
 import cors from 'cors'
 import express from 'express'
+import helmet from 'helmet'
 import { sequelize } from './sequelize'
 import userAPI from './userAPI'
 import { Emoji } from './models/emoji.model'
@@ -8,6 +9,30 @@ import { Emoji } from './models/emoji.model'
 dotenv.config({ path: '../../.env' })
 
 const app = express()
+
+// Применяем Helmet для автоматической защиты
+app.use(
+  helmet({
+    // Настройки Content Security Policy
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", 'https://cdn.jsdelivr.net'],
+        styleSrc: ["'self'", 'https://fonts.googleapis.com'],
+        fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+        imgSrc: ["'self'", 'data:', 'https://cdn.jsdelivr.net'],
+        connectSrc: ["'self'", 'https://ya-praktikum.tech'],
+        frameSrc: ["'none'"],
+        objectSrc: ["'none'"],
+        upgradeInsecureRequests: [],
+      },
+    },
+    // Дополнительные настройки безопасности
+    crossOriginEmbedderPolicy: false,
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
+  })
+)
+
 app.use(cors())
 app.use(express.json())
 
@@ -48,5 +73,6 @@ userAPI(app)
 sequelize.sync().then(() => {
   app.listen(port, () => {
     console.log(`  ➜ 🎸 Server is listening on port: ${port}`)
+    console.log(`  ➜ 🛡️ Helmet security headers enabled`)
   })
 })
