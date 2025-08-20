@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import { useAppSelector, useAppDispatch } from '../store/storeHooks'
 import { getUserThunk } from '../store/thunks/authThunk'
 import Button from '../components/Button'
-import { getLocationInfo } from '../utils/geolocationUtils'
+import { getLocationInfo, LocationInfo } from '../utils/geolocationUtils'
 import axios from '../axios'
 import '../components/FormToFill.css'
 
@@ -22,10 +22,7 @@ const ProfilePage = () => {
   })
 
   const [avatarPreview, setAvatarPreview] = useState<string | null>(user.avatar)
-  const [locationInfo, setLocationInfo] = useState<{
-    country: string
-    city: string
-  } | null>(null)
+  const [locationInfo, setLocationInfo] = useState<LocationInfo | null>(null)
   const [locationLoading, setLocationLoading] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [showNewPassword, setShowNewPassword] = useState(false)
