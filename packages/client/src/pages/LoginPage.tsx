@@ -4,6 +4,7 @@ import { FormConfig } from '../types/formConfig'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../store/storeHooks'
 import { getUserThunk, signInThunk } from '../store/thunks/authThunk'
+import { sanitizeFormData } from '../utils/xssProtection'
 
 const loginFormConfig: FormConfig = {
   description: 'Вход',
@@ -23,15 +24,19 @@ const LoginPage = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const form = e.currentTarget
-    const data = Object.fromEntries(new FormData(form)) as Record<
+    const formData = Object.fromEntries(new FormData(form)) as Record<
       string,
       string
     >
+
+    // Применяем защиту от XSS
+    const sanitizedData = sanitizeFormData(formData)
+
     try {
       await dispatch(
         signInThunk({
-          login: data.login,
-          password: data.password,
+          login: sanitizedData.login,
+          password: sanitizedData.password,
         })
       ).unwrap()
       await dispatch(getUserThunk())

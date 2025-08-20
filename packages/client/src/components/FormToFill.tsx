@@ -4,6 +4,7 @@ import './FormToFill.css'
 import { Validation } from '../hooks/Validation'
 import { validationHook } from '../hooks/ValidationHook'
 import { OAuthButton } from './oauth-button/OAuthButton'
+import { validateInput } from '../utils/xssProtection'
 
 type Props = {
   description: string
@@ -32,6 +33,23 @@ function FormToFill(props: Props) {
     onSubmit?.(e)
   }
 
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const target = e.target
+    const value = target.value
+
+    // Применяем защиту от XSS при вводе
+    if (target.type === 'textarea') {
+      const validated = validateInput(value, 5000) // Увеличиваем лимит для textarea
+      if (validated === null) {
+        // Если ввод невалиден, очищаем поле
+        target.value = ''
+        return
+      }
+    }
+  }
+
   return (
     <div className="card w-25 p-2 tofill__block">
       <div className="tofill__wrapper">
@@ -42,13 +60,36 @@ function FormToFill(props: Props) {
               <label className="form-label tofill__label" htmlFor={id}>
                 {label}
               </label>
-              <input
-                type={type}
-                id={id}
-                name={name}
-                className="form-control tofill__input"
-                onBlur={e => Validation.validate(e.target as HTMLInputElement)}
-              />
+              {type === 'textarea' ? (
+                <textarea
+                  id={id}
+                  name={name}
+                  className="form-control tofill__input"
+                  rows={4}
+                  onChange={handleInputChange}
+                  onBlur={e => {
+                    // Для textarea применяем дополнительную валидацию
+                    const value = e.target.value
+                    const validated = validateInput(value, 5000)
+                    if (validated === null) {
+                      e.target.classList.add('input-error')
+                    } else {
+                      e.target.classList.remove('input-error')
+                    }
+                  }}
+                />
+              ) : (
+                <input
+                  type={type}
+                  id={id}
+                  name={name}
+                  className="form-control tofill__input"
+                  onChange={handleInputChange}
+                  onBlur={e =>
+                    Validation.validate(e.target as HTMLInputElement)
+                  }
+                />
+              )}
               <span className="text-danger small"></span>
             </div>
           ))}
