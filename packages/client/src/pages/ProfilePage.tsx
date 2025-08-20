@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import { useAppSelector, useAppDispatch } from '../store/storeHooks'
 import { getUserThunk } from '../store/thunks/authThunk'
 import Button from '../components/Button'
+import { getLocationInfo, LocationInfo } from '../utils/geolocationUtils'
 import axios from '../axios'
 import '../components/FormToFill.css'
 
@@ -17,9 +18,12 @@ const ProfilePage = () => {
     email: '',
     password: '',
     newPassword: '',
+    location: '',
   })
 
   const [avatarPreview, setAvatarPreview] = useState<string | null>(user.avatar)
+  const [locationInfo, setLocationInfo] = useState<LocationInfo | null>(null)
+  const [locationLoading, setLocationLoading] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [showNewPassword, setShowNewPassword] = useState(false)
 
@@ -31,6 +35,7 @@ const ProfilePage = () => {
       login: user.login || '',
       phone: user.phone || '',
       email: user.email || '',
+      location: user.location || '',
     }))
     setAvatarPreview(user.avatar)
   }, [user])
@@ -48,6 +53,21 @@ const ProfilePage = () => {
       }
       reader.readAsDataURL(file)
       // TODO: Загрузка аватара на сервер
+    }
+  }
+
+  const handleGetLocation = async () => {
+    setLocationLoading(true)
+    try {
+      const location = await getLocationInfo()
+      const locationString = `${location.city}, ${location.country}`
+      setForm(prev => ({ ...prev, location: locationString }))
+      setLocationInfo(location)
+    } catch (error) {
+      console.error('Ошибка получения местоположения:', error)
+      // Можно добавить уведомление об ошибке
+    } finally {
+      setLocationLoading(false)
     }
   }
 
@@ -152,6 +172,26 @@ const ProfilePage = () => {
               value={form.email}
               onChange={handleChange}
             />
+          </div>
+
+          <div className="mb-2">
+            <label className="form-label">Местоположение</label>
+            <div className="d-flex gap-2 align-items-center">
+              <input
+                className="form-control"
+                name="location"
+                value={form.location}
+                onChange={handleChange}
+                placeholder="Нажмите кнопку для получения местоположения"
+              />
+              <Button
+                type="button"
+                className="btn btn-outline-primary button__bgc"
+                onClick={handleGetLocation}
+                disabled={locationLoading}>
+                {locationLoading ? 'Получаю...' : '📍 Получить'}
+              </Button>
+            </div>
           </div>
           {showNewPassword && (
             <>
