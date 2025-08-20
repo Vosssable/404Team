@@ -86,20 +86,12 @@ const ForumTopicPage = () => {
   return (
     <div className={styles.forumRoot}>
       <div className={styles.forumModal}>
-        <SafeHtml
-          content={topic.title}
-          className={styles.topicTitle}
-          allowHtml={false}
-        />
+        <SafeHtml content={topic.title} className={styles.topicTitle} />
         <div className={styles.topicMeta}>
           <SafeHtml content={topic.author} /> |{' '}
           <SafeHtml content={topic.createdAt} />
         </div>
-        <SafeHtml
-          content={topic.content}
-          className={styles.topicContent}
-          allowHtml={false}
-        />
+        <SafeHtml content={topic.content} className={styles.topicContent} />
 
         {/* Эмодзи-реакции для топика */}
         <EmojiReactions
@@ -127,11 +119,7 @@ const ForumTopicPage = () => {
                   <SafeHtml content={c.createdAt} />
                 </span>
               </div>
-              <SafeHtml
-                content={c.content}
-                className={styles.messageContent}
-                allowHtml={false}
-              />
+              <SafeHtml content={c.content} className={styles.messageContent} />
 
               {/* Эмодзи-реакции для комментария */}
               <EmojiReactions
