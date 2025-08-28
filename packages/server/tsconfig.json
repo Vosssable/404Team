@@ -18,6 +18,7 @@
     "noUnusedLocals": true,
     "forceConsistentCasingInFileNames": true,
     "lib": ["es2019", "esnext.asynciterable"],
+    "skipLibCheck": true,
     "types": ["node", "jest"],
     "baseUrl": ".",
     "paths": {

@@ -9,6 +9,7 @@ export interface UserState {
   phone: string
   avatar: string | null
   display_name: string | null
+  location: string
   isAuthChecked: boolean
 }
 
@@ -21,6 +22,7 @@ const initialState: UserState = {
   phone: '',
   avatar: null,
   display_name: null,
+  location: '',
   isAuthChecked: false,
 }
 

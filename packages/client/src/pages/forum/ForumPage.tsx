@@ -22,11 +22,7 @@ const ForumPage = () => {
           {mockTopics.map(topic => (
             <div key={topic.id} className={styles.topicCard}>
               <Link to={`/forum/${topic.id}`} className={styles.topicLink}>
-                <SafeHtml
-                  content={topic.title}
-                  className={styles.topicTitle}
-                  allowHtml={false}
-                />
+                <SafeHtml content={topic.title} className={styles.topicTitle} />
                 <div className={styles.topicMeta}>
                   <SafeHtml content={topic.author} /> |{' '}
                   <SafeHtml content={topic.createdAt} />
@@ -34,7 +30,6 @@ const ForumPage = () => {
                 <SafeHtml
                   content={topic.content}
                   className={styles.topicPreview}
-                  allowHtml={false}
                 />
               </Link>
 
