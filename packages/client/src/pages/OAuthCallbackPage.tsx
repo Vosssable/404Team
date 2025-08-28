@@ -26,9 +26,6 @@ const OAuthCallbackPage = () => {
           ).unwrap()
           navigate('/')
         } catch (error) {
-          alert(
-            error instanceof Error ? error.message : 'Ошибка OAuth авторизации'
-          )
           navigate('/login')
         }
       }

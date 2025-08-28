@@ -5,7 +5,7 @@ import { registration } from '../../api/registration'
 import { authorization } from '../../api/authorization'
 import { initiateOAuth, completeOAuth } from '../../api/oauth'
 
-const oAuthRedirectUri = 'https://nu-pogodi.ya-praktikum.tech/login'
+const oAuthRedirectUri = 'https://nu-pogodi.ya-praktikum.tech/oauth-callback'
 
 export const signUpThunk = createAsyncThunk<
   unknown,
