@@ -1,6 +1,7 @@
 import styles from './ForumPage.module.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { mockTopics } from './lib/mockForumData'
+import SafeHtml from '../../components/SafeHtml'
 
 const ForumPage = () => {
   const navigate = useNavigate()
@@ -21,11 +22,15 @@ const ForumPage = () => {
           {mockTopics.map(topic => (
             <div key={topic.id} className={styles.topicCard}>
               <Link to={`/forum/${topic.id}`} className={styles.topicLink}>
-                <div className={styles.topicTitle}>{topic.title}</div>
+                <SafeHtml content={topic.title} className={styles.topicTitle} />
                 <div className={styles.topicMeta}>
-                  {topic.author} | {topic.createdAt}
+                  <SafeHtml content={topic.author} /> |{' '}
+                  <SafeHtml content={topic.createdAt} />
                 </div>
-                <div className={styles.topicPreview}>{topic.content}</div>
+                <SafeHtml
+                  content={topic.content}
+                  className={styles.topicPreview}
+                />
               </Link>
 
               {/* Эмодзи-реакции для топика в списке */}
