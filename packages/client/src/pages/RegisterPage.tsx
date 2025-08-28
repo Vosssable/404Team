@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { signUpThunk } from '../store/thunks/authThunk'
 import { useAppDispatch } from '../store/storeHooks'
 import { validationHook } from '../hooks/ValidationHook'
+import { sanitizeFormData } from '../utils/xssProtection'
 
 const registerFormConfig: FormConfig = {
   description: 'Регистрация',
@@ -35,19 +36,24 @@ const RegisterPage = () => {
     e.preventDefault()
     const form = e.currentTarget
     if (!validationHook(form)) return
-    const data = Object.fromEntries(new FormData(form)) as Record<
+
+    const formData = Object.fromEntries(new FormData(form)) as Record<
       string,
       string
     >
+
+    // Применяем защиту от XSS
+    const sanitizedData = sanitizeFormData(formData)
+
     try {
       await dispatch(
         signUpThunk({
-          first_name: data.first_name,
-          second_name: data.second_name,
-          login: data.login,
-          email: data.email,
-          password: data.password,
-          phone: data.phone,
+          first_name: sanitizedData.first_name,
+          second_name: sanitizedData.second_name,
+          login: sanitizedData.login,
+          email: sanitizedData.email,
+          password: sanitizedData.password,
+          phone: sanitizedData.phone,
         })
       ).unwrap()
       navigate('/')
