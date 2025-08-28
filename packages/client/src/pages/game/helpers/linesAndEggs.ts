@@ -85,7 +85,7 @@ const updateEggs = (
     const egg = eggs[i],
       line = lines[egg.line],
       timePassed = (now - egg.lastUpdate) / 1000
-    if (timePassed >= 2) {
+    if (timePassed >= 1) {
       egg.stage++
       egg.lastUpdate = now
 

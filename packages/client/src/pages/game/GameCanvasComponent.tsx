@@ -74,7 +74,7 @@ const GameCanvasComponent = ({ width, height, isPaused }: TProps) => {
     animate()
     const interval = setInterval(() => {
       createEgg(eggsRef, linesRef)
-    }, 2000)
+    }, (Math.random() + 0.5) * 1000)
 
     return () => {
       if (animationRef.current) {
