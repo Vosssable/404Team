@@ -17,11 +17,11 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "'unsafe-inline'"],
-        styleSrc: ["'self'", "'unsafe-inline'"],
-        imgSrc: ["'self'", 'data:', 'https:'],
-        fontSrc: ["'self'", 'data:'],
-        connectSrc: ["'self'"],
+        scriptSrc: ["'self'", 'https://cdn.jsdelivr.net'],
+        styleSrc: ["'self'", 'https://fonts.googleapis.com'],
+        fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+        imgSrc: ["'self'", 'data:', 'https://cdn.jsdelivr.net'],
+        connectSrc: ["'self'", 'https://ya-praktikum.tech'],
         frameSrc: ["'none'"],
         objectSrc: ["'none'"],
         upgradeInsecureRequests: [],
